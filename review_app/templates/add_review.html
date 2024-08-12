@@ -1,11 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
 
-<section id="login">
-    <form class="col-md-6" method="POST">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" placeholder="Please enter an email address" required>
-        <input type="submit">
-    </form> 
+<section id="add-review">
+    <form class="col-md-6" action="{{ url_for('add_review') }}" method="POST">
+        <label for="gear">Product</label>
+        <select name="gear" id="gear" class="validate" required>
+            <option value="" disabled selected>Choose a Product</option> 
+            {% if gear_items %}         
+            {% for gear in gear_items %}
+                <option value="{{ gear.id }}">{{ gear.name }}</option>
+            {% endfor %}
+            {% endif %}
+        </select>
+        <p>Can't see what you're looking for?<span><a href="{{ url_for('add_product') }}">Add a new Product here</a></span></p>
+        <label for="review">Enter your review</label>
+        <textarea id="review" name="review"></textarea>
+        <label for="rating">Enter your rating out of 5</label>
+        <input type="text" id="rating" name="rating" required>
+        <button type="submit">Add Review</button>
+    </form>
+     
 </section>
 {% endblock %}
