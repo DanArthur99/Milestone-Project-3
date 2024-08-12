@@ -65,6 +65,31 @@ def sign_up():
             return redirect(url_for("home"))
     return render_template("sign_up.html")
 
+
+
 @app.route("/add_review", methods=["GET", "POST"])
+@login_required
 def add_review():
-    return render_template("add_review.html")
+    gear_items = list(Gear.query.order_by(Gear.name).all())
+    if request.method == "POST":
+        review_content = request.form.get("review")
+        rating = request.form.get("rating")
+        gear_item = Gear.query.filter_by(id=request.form.get("gear")).first()
+        current_user_id = current_user.id 
+        review = Review(
+            review_contents=review_content,
+            review_rating=rating,
+            user_id=current_user_id,
+            gear_id=gear_item.id
+        )
+        db.session.add(review)
+        db.session.commit()
+        flash("Thanks for your product review")
+        return redirect(url_for("home"))
+    return render_template("add_review.html", gear_items=gear_items)
+
+@app.route("/add_product", methods=["GET", "POST"])
+@login_required
+def add_product():
+    return render_template("add_product.html")
+

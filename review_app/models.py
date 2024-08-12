@@ -10,8 +10,10 @@ class User(db.Model, UserMixin):
 
 class Gear(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(25), unique=True, nullable=False)
     brand_id = db.Column(db.Integer, db.ForeignKey("brand.id", ondelete="CASCADE"), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey("category.id", ondelete="CASCADE"), nullable=False)
+    reviews = db.relationship("Review", backref="gear", cascade="all, delete", lazy=True)
 
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -25,5 +27,7 @@ class Brand(db.Model):
 
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    review_contents = db.Column(db.String(25), unique=False, nullable=True)
+    review_rating = db.Column(db.Integer, unique=False, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id", ondelete="CASCADE"), nullable=False)
     gear_id = db.Column(db.Integer, db.ForeignKey("gear.id", ondelete="CASCADE"), nullable=False)
