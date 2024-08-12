@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section id="add-review">
+    <form class="col-md-6" method="POST">
+        <label for="brand">Product</label>
+        <select name="brand_name" id="brand" class="validate" required>
+            <option value="" disabled selected>Choose a Product</option>
+
+            {% for gear in gear_items %}
+                <option value="{{ gear.id }}">{{ gear.name }}</option>
+            {% endfor %}
+        </select>
+        <p>Can't see what you're looking for?<span><a href="{{ url_for('add_product') }}">Add a new Product here</a></span></p>
+    </form> 
+</section>
+{% endblock %}
