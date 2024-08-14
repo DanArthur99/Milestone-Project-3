@@ -1,23 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
 
+<h1>{{ title }}</h1>
 <section id="add-review">
-    <form class="col-md-6" action="{{ url_for('add_review') }}" method="POST">
-        <label for="gear">Product</label>
-        <select name="gear" id="gear" class="validate" required>
-            <option value="" disabled selected>Choose a Product</option> 
-            {% if gear_items %}         
-            {% for gear in gear_items %}
-                <option value="{{ gear.id }}">{{ gear.name }}</option>
-            {% endfor %}
-            {% endif %}
-        </select>
-        <p>Can't see what you're looking for?<span><a href="{{ url_for('add_product') }}">Add a new Product here</a></span></p>
-        <label for="review">Enter your review</label>
-        <textarea id="review" name="review"></textarea>
-        <label for="rating">Enter your rating out of 5</label>
-        <input type="text" id="rating" name="rating" required>
-        <button type="submit">Add Review</button>
+    <form class="col-md-6" method="POST">
+        {{ form.hidden_tag() }}
+
+        {{ form.review.label(class="form-label")}}
+        {{ form.review(class="form-control") }}
+
+        <br>
+
+        {{ form.rating.label(class="form-label") }}
+        {{ form.rating(class="form-control") }}
+
+        <br>
+
+        {{ form.submit(class="btn btn-secondary") }}
     </form>
      
 </section>

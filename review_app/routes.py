@@ -1,6 +1,7 @@
 from flask import render_template, request, redirect, url_for, flash
 from review_app import app, db, login_user, LoginManager, login_required, logout_user, current_user
 from review_app.models import User, Gear, Category, Brand, Review
+from review_app.forms import LoginForm, SignUpForm, AddReviewForm, SearchForm
 import bcrypt
 
 login_manager = LoginManager()
@@ -13,13 +14,16 @@ def load_user(user_id):
 
 @app.route("/")
 def home():
-    return render_template("base.html")
+    form = SearchForm()
+    return render_template("base.html", form=form)
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == "POST":
-        entered_password = bytes(request.form.get("password"), "utf-8")
-        user = User.query.filter_by(email=request.form.get("email")).first()
+    form = LoginForm()
+    if form.validate_on_submit():
+        entered_password = bytes(form.password.data, "utf-8")
+        user = User.query.filter_by(email=form.email.data).first()
         if user:
             user_password = bytes(user.password, "utf-8")
             if bcrypt.checkpw(entered_password, user_password):
@@ -30,7 +34,7 @@ def login():
                 flash("Password not recognised")
         else:
             flash("User not recognised")
-    return render_template("login.html")
+    return render_template("login.html", form=form)
 
 @app.route("/logout", methods=["GET", "POST"])
 @login_required
@@ -47,34 +51,44 @@ def dashboard():
 
 @app.route("/sign_up", methods=["GET", "POST"])
 def sign_up():
-    if request.method == "POST":
-        password = bytes(request.form.get("password"), "utf-8")
-        confirm_password = bytes(request.form.get("confirm_password"), "utf-8")
+    form = SignUpForm()
+    if form.validate_on_submit():
+        password = bytes(form.password.data, "utf-8")
+        confirm_password = bytes(form.confirm_password.data, "utf-8")
         if password != confirm_password:
             flash("Passwords don't match")
         else:
             hashed_pw = bcrypt.hashpw(password, bcrypt.gensalt()) 
             user = User(
-                username=request.form.get("username"),
-                email=request.form.get("email"),
+                username=form.username.data,
+                email=form.email.data,
                 password=hashed_pw.decode("utf-8")
             )
             db.session.add(user)
             db.session.commit()
             flash("Account created successfully")
             return redirect(url_for("home"))
-    return render_template("sign_up.html")
+    return render_template("sign_up.html", form=form)
 
+@app.route("/search", methods=["POST"])
+def search():
+    form = SearchForm()
+    gear_items = Gear.query
+    if form.validate_on_submit():
+        gear_searched = form.searched.data
+        gear_items = gear_items.filter(Gear.name.ilike('%' + gear_searched + '%'))
+        gear_items = gear_items.order_by(Gear.name).all()
+        return render_template("search.html", form=form, searched=gear_searched, gear_items=gear_items)
 
-
-@app.route("/add_review", methods=["GET", "POST"])
+@app.route("/add_review/<gear>", methods=["GET", "POST"])
 @login_required
-def add_review():
-    gear_items = list(Gear.query.order_by(Gear.name).all())
-    if request.method == "POST":
-        review_content = request.form.get("review")
-        rating = request.form.get("rating")
-        gear_item = Gear.query.filter_by(id=request.form.get("gear")).first()
+def add_review(gear):
+    form = AddReviewForm()
+    if form.validate_on_submit():
+        review_content = form.review.data
+        rating = form.rating.data
+        gear_name = gear.replace("-", " ").title()
+        gear_item = Gear.query.filter_by(name=gear_name).first()
         current_user_id = current_user.id 
         review = Review(
             review_contents=review_content,
@@ -86,10 +100,18 @@ def add_review():
         db.session.commit()
         flash("Thanks for your product review")
         return redirect(url_for("home"))
-    return render_template("add_review.html", gear_items=gear_items)
+    return render_template("add_review.html", form=form, title=gear_item.name)
 
 @app.route("/add_product", methods=["GET", "POST"])
 @login_required
 def add_product():
     return render_template("add_product.html")
+
+@app.route("/about_gear/<gear>")
+def about_gear(gear):
+    form = SearchForm()
+    gear_name = gear.replace("-", " ").title()
+    gear_item = Gear.query.filter_by(name=gear_name).first()
+    reviews = Review.query.filter_by(gear_id=gear_item.id)
+    return render_template("about_gear.html", form=form, gear_item=gear_item, title=gear_item.name, gear_url=gear, reviews=reviews)
 
