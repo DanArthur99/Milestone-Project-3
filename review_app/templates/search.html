@@ -4,8 +4,15 @@
 <h2>You searched for...</h2>
 <p>{{ searched }}</p>
 
+<p>Can't see what you're looking for?<span><a href="{{ url_for('add_product') }}">Add a new Product here</a></span></p>
+
 {% for gear in gear_items %}
-    <a href="/about_gear/{{ gear.name.replace('-', ' ').title() }}">{{ gear.name }}</a>
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <a href="/about_gear/{{ gear.name.replace(' ', '-').lower() }}">{{ gear.name }}</a>
+    </div>
+</div>
+    
 {% endfor %}
 
 {% endblock %}

@@ -2,7 +2,7 @@ import os
 from flask import Flask, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, LoginManager, login_required, login_user, logout_user, current_user
-from wtforms.fields import StringField, SubmitField, PasswordField, EmailField
+from wtforms.fields import StringField, SubmitField, PasswordField, EmailField, SelectField
 from wtforms.validators import DataRequired
 from wtforms.widgets import TextArea
 from flask_wtf import FlaskForm

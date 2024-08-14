@@ -1,4 +1,4 @@
-from review_app import StringField, SubmitField, PasswordField, EmailField, FlaskForm, DataRequired, TextArea
+from review_app import StringField, SubmitField, PasswordField, EmailField, FlaskForm, DataRequired, SelectField, TextArea
 
 class LoginForm(FlaskForm):
     email = EmailField("Email", validators=[DataRequired()])
@@ -14,7 +14,7 @@ class SignUpForm(FlaskForm):
 
 class AddReviewForm(FlaskForm):
     review = StringField("Enter your review", widget=TextArea())
-    rating = StringField("Enter your rating", validators=[DataRequired()])
+    rating = SelectField(u"Rating out of 5", choices=[(0, "0"), (1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5")])
     submit = SubmitField("Submit")
 
 class SearchForm(FlaskForm):

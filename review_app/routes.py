@@ -47,7 +47,8 @@ def logout():
 @app.route("/dashboard", methods=["GET", "POST"])
 @login_required
 def dashboard():
-    return render_template("dashboard.html")
+    form = SearchForm()
+    return render_template("dashboard.html", form=form)
 
 @app.route("/sign_up", methods=["GET", "POST"])
 def sign_up():
@@ -83,23 +84,31 @@ def search():
 @app.route("/add_review/<gear>", methods=["GET", "POST"])
 @login_required
 def add_review(gear):
+    gear_name = gear.replace("-", " ").title()
+    gear_item = Gear.query.filter_by(name=gear_name).first()
+    reviews = Review.query.filter_by(gear_id=gear_item.id).all()
+    review_user_ids = set()
+    for review in reviews:
+        review_user_ids.add(review.user_id)
     form = AddReviewForm()
     if form.validate_on_submit():
         review_content = form.review.data
         rating = form.rating.data
-        gear_name = gear.replace("-", " ").title()
-        gear_item = Gear.query.filter_by(name=gear_name).first()
         current_user_id = current_user.id 
-        review = Review(
-            review_contents=review_content,
-            review_rating=rating,
-            user_id=current_user_id,
-            gear_id=gear_item.id
-        )
-        db.session.add(review)
-        db.session.commit()
-        flash("Thanks for your product review")
-        return redirect(url_for("home"))
+        if current_user_id in review_user_ids:
+            flash("You have already written a review for this product")
+            return redirect(url_for("add_review", gear=gear))
+        else:
+            review = Review(
+                review_contents=review_content,
+                review_rating=rating,
+                user_id=current_user_id,
+                gear_id=gear_item.id
+            )
+            db.session.add(review)
+            db.session.commit()
+            flash("Thanks for your product review")
+            return redirect(url_for("home"))
     return render_template("add_review.html", form=form, title=gear_item.name)
 
 @app.route("/add_product", methods=["GET", "POST"])
@@ -112,6 +121,6 @@ def about_gear(gear):
     form = SearchForm()
     gear_name = gear.replace("-", " ").title()
     gear_item = Gear.query.filter_by(name=gear_name).first()
-    reviews = Review.query.filter_by(gear_id=gear_item.id)
+    reviews = Review.query.filter_by(gear_id=gear_item.id).all()
     return render_template("about_gear.html", form=form, gear_item=gear_item, title=gear_item.name, gear_url=gear, reviews=reviews)
 
