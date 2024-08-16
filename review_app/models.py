@@ -27,7 +27,7 @@ class Brand(db.Model):
 
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    review_contents = db.Column(db.String(25), unique=False, nullable=True)
+    review_contents = db.Column(db.String, unique=False, nullable=True)
     review_rating = db.Column(db.Integer, unique=False, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id", ondelete="CASCADE"), nullable=False)
     gear_id = db.Column(db.Integer, db.ForeignKey("gear.id", ondelete="CASCADE"), nullable=False)

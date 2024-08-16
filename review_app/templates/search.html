@@ -1,13 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h2>You searched for...</h2>
-<p>{{ searched }}</p>
+{% if searched == None %}
 
-<p>Can't see what you're looking for?<span><a href="{{ url_for('add_product') }}">Add a new Product here</a></span></p>
+<h2 class="m-3">Showing all results...</h2>
+
+{% else %}
+
+<h2 class="m-3">Search results for {{ searched }}...</h2>
+
+{% endif %}
+
+<p class="m-3">Can't see what you're looking for?<span><a href="{{ url_for('add_product') }}">Add a new Product here</a></span></p>
 
 {% for gear in gear_items %}
-<div class="card" style="width: 18rem;">
+<div class="card shadow m-3" style="width: 18rem;">
     <div class="card-body">
         <a href="/about_gear/{{ gear.name.replace(' ', '-').lower() }}">{{ gear.name }}</a>
     </div>

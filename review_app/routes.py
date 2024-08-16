@@ -68,7 +68,7 @@ def sign_up():
             db.session.add(user)
             db.session.commit()
             flash("Account created successfully")
-            return redirect(url_for("home"))
+            return redirect(url_for("login"))
     return render_template("sign_up.html", form=form)
 
 @app.route("/search", methods=["POST"])
@@ -97,7 +97,7 @@ def add_review(gear):
         current_user_id = current_user.id 
         if current_user_id in review_user_ids:
             flash("You have already written a review for this product")
-            return redirect(url_for("add_review", gear=gear))
+            return redirect(url_for("about_gear", gear=gear))
         else:
             review = Review(
                 review_contents=review_content,
@@ -108,13 +108,51 @@ def add_review(gear):
             db.session.add(review)
             db.session.commit()
             flash("Thanks for your product review")
-            return redirect(url_for("home"))
+            return redirect(url_for("about_gear", gear=gear))
     return render_template("add_review.html", form=form, title=gear_item.name)
+
+@app.route("/edit_review/<int:id>", methods=["GET", "POST"])
+@login_required
+def edit_review(id):
+    review = Review.query.get_or_404(id)
+    form = AddReviewForm()
+    gear = Gear.query.filter_by(id=review.gear_id).first()
+    gear_name = gear.name.replace(" ", "-").lower()
+    if form.validate_on_submit():
+        review.review_contents = form.review.data
+        review.review_rating = form.rating.data
+        db.session.add(review)
+        db.session.commit()
+        flash("Your review has been updated")
+        return redirect(url_for("about_gear", gear=gear_name))
+    form.review.data = review.review_contents
+    form.rating.data = review.review_rating
+    return render_template("edit_review", form=form)
+
+@app.route("/delete_review/<int:id>")
+@login_required
+def delete_review(id):
+    form = SearchForm()
+    review = Review.query.get_or_404(id)
+    gear = Gear.query.filter_by(id=review.gear_id).first()
+    try:
+        db.session.delete(review)
+        db.session.commit()
+        flash("Review successfully deleted")
+        reviews = Review.query.filter_by(gear_id=review.gear_id).all() 
+        return render_template("about_gear.html", form=form, reviews=reviews, title=gear.name)
+    except:
+        flash("There seems to be a problem with deleting this post")
+        reviews = Review.query.filter_by(gear_id=review.gear_id).all() 
+        return render_template("about_gear.html", form=form, reviews=reviews, title=gear.name)
+
+
 
 @app.route("/add_product", methods=["GET", "POST"])
 @login_required
 def add_product():
-    return render_template("add_product.html")
+    form = SearchForm()
+    return render_template("add_product.html", form=form)
 
 @app.route("/about_gear/<gear>")
 def about_gear(gear):
@@ -122,5 +160,5 @@ def about_gear(gear):
     gear_name = gear.replace("-", " ").title()
     gear_item = Gear.query.filter_by(name=gear_name).first()
     reviews = Review.query.filter_by(gear_id=gear_item.id).all()
-    return render_template("about_gear.html", form=form, gear_item=gear_item, title=gear_item.name, gear_url=gear, reviews=reviews)
+    return render_template("about_gear.html", form=form, title=gear_item.name, reviews=reviews)
 
