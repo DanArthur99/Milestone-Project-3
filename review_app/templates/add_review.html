@@ -1,23 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>{{ title }}</h1>
-<section id="add-review">
-    <form class="col-md-6" method="POST">
-        {{ form.hidden_tag() }}
+<h1 class="text-center mt-3">{{ title }}</h1>
+<div class="container">
+    <section id="add-review">
+        <div class="row justify-content-center">
+            <form class="col-md-6 justify-content-center mt-5" method="POST">
+                {{ form.hidden_tag() }}
+        
+                {{ form.review.label(class="form-label")}}
+                {{ form.review(class="form-control") }}
+        
+                <br>
+        
+                {{ form.rating.label(class="form-label") }}
+                {{ form.rating(class="form-control") }}
+        
+                <br>
+        
+                {{ form.submit(class="btn btn-secondary") }}
+            </form>
+        </div>
+    </section>
+</div>
 
-        {{ form.review.label(class="form-label")}}
-        {{ form.review(class="form-control") }}
-
-        <br>
-
-        {{ form.rating.label(class="form-label") }}
-        {{ form.rating(class="form-control") }}
-
-        <br>
-
-        {{ form.submit(class="btn btn-secondary") }}
-    </form>
-     
-</section>
 {% endblock %}

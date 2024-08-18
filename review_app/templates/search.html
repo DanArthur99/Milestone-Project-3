@@ -1,17 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h2 class="m-3">Search results for {{ searched }}...</h2>
-
-<p class="m-3">Can't see what you're looking for?<span><a href="{{ url_for('add_product') }}">Add a new Product here</a></span></p>
-
-{% for gear in gear_items %}
-<div class="card shadow m-3" style="width: 18rem;">
-    <div class="card-body">
-        <a href="/about_gear/{{ gear.name.replace(' ', '-').lower() }}">{{ gear.name }}</a>
+<div class="container">
+    <div class="row justify-content-center">
+        <h2 class="m-3 col-4 text-center mt-5">Search results for {{ searched }}...</h2>
+    </div>
+    <div class="row justify-content-center">
+        <p class="m-3 col-12 text-center">Can't see what you're looking for?<span><a href="{{ url_for('add_product') }}">Add a new Product
+            here</a></span></p>
+    </div>
+    <div class="row justify-content-center">
+        {% for gear in gear_items %}
+        <div class="card shadow m-1 col-3" style="width: 18rem;">
+            <div class="card-body">
+                <a href="/about_gear/{{ gear.name.replace(' ', '-').lower() }}">{{ gear.name }}</a>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
-    
-{% endfor %}
 
 {% endblock %}

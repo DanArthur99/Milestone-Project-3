@@ -1,23 +1,33 @@
 {% extends "base.html" %}
 {% block content %}
 
-<section id="login">
-    <form class="col-md-6" method="POST">
+<div class="container">
+    <div class="row">
+        <header class="col-12 mt-5 text-center">
+            <h1>Login</h1>
+        </header>
+    </div>
+    <section id="login">
+        <div class="row justify-content-center">
+            <form class="col-md-6 mt-5" method="POST">
+    
+                {{ form.hidden_tag() }}
+        
+                {{ form.email.label(class="form-label")}}
+                {{ form.email(class="form-control") }}
+        
+                <br>
+        
+                {{ form.password.label(class="form-label") }}
+                {{ form.password(class="form-control") }}
+        
+                <br>
+        
+                {{ form.submit(class="btn btn-secondary") }}
+        
+            </form> 
+        </div>
+    </section>
+</div>
 
-        {{ form.hidden_tag() }}
-
-        {{ form.email.label(class="form-label")}}
-        {{ form.email(class="form-control") }}
-
-        <br>
-
-        {{ form.password.label(class="form-label") }}
-        {{ form.password(class="form-control") }}
-
-        <br>
-
-        {{ form.submit(class="btn btn-secondary") }}
-
-    </form> 
-</section>
 {% endblock %}

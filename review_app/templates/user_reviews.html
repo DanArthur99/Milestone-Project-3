@@ -1,22 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="row justify-content-center">
-    <h1 class="col-6 text-center mt-5">{{ title }}</h1>
-</div>
-
-
-<div class="row justify-content-center">
-    <div class="col-4 mt-3 text-center">
-        <a class="btn btn-primary" href="/add_review/{{ title.replace(' ', '-').lower() }}">Add Review</a>
+<div class="container">
+    <div class="row justify-content-center">
+        <h1 class="m-3 col-4 text-center">Your Reviews</h1>
     </div>
 </div>
 
 
+
 <div class="row justify-content-center">
-    {% for review in reviews %}
-    <div class="card m-5 col-4 shadow" style="width: 20rem;">
+    {% for review in user_reviews %}
+    <div class="card m-3 shadow" style="width: 18rem;">
         <div class="card-body">
+            <h3 class="card-text">{{ review.gear.name }}</h3>
             <p class="card-text">Review: {{ review.review_contents }}</p>
             <p class="card-text">Rating: {{ review.review_rating }} / 5</p>
             <p class="card-text">User: {{ review.user.username }}</p>

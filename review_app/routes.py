@@ -65,10 +65,15 @@ def sign_up():
                 email=form.email.data,
                 password=hashed_pw.decode("utf-8")
             )
-            db.session.add(user)
-            db.session.commit()
-            flash("Account created successfully")
-            return redirect(url_for("login"))
+            try: 
+                db.session.add(user)
+                db.session.commit()
+                flash("Account created successfully")
+                return redirect(url_for("login"))
+            except:
+                flash("There was an error signing you up")
+                return redirect(url_for("sign_up"))
+            
     return render_template("sign_up.html", form=form)
 
 @app.route("/search", methods=["POST"])
@@ -127,7 +132,7 @@ def edit_review(id):
         return redirect(url_for("about_gear", gear=gear_name))
     form.review.data = review.review_contents
     form.rating.data = review.review_rating
-    return render_template("edit_review", form=form)
+    return render_template("edit_review", title=gear.name, form=form)
 
 @app.route("/delete_review/<int:id>")
 @login_required
@@ -166,7 +171,7 @@ def brand_gear_list(brand):
     gear = Gear.query.filter_by(brand_id=chosen_brand.id).all()
     return render_template("brand_gear_list.html", gear=gear, form=form, title=b_name)
 
-@app.route("/category_gear_list/<category>")
+@app.route("/category_gear_list/<category>", methods=["GET", "POST"])
 def category_gear_list(category):
     c_name = category.replace("-", " ").title()
     chosen_category = Category.query.filter_by(category_name=c_name).first()
@@ -174,6 +179,14 @@ def category_gear_list(category):
     gear = Gear.query.filter_by(category_id=chosen_category.id).all()
     return render_template("category_gear_list.html", gear=gear, form=form, title=c_name)
 
+
+@app.route("/user_reviews/<int:id>", methods=["GET", "POST"])
+@login_required
+def user_reviews(id):
+    form = SearchForm()
+    user = User.query.get_or_404(id)
+    user_reviews = Review.query.filter_by(user_id=user.id)
+    return render_template("user_reviews.html", user_reviews=user_reviews, form=form)
 
 @app.route("/add_product", methods=["GET", "POST"])
 @login_required
