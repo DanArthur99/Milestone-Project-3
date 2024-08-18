@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+
+<header>
+    <h1>Brands</h1>
+</header>
+
+{% for brand in brands %}
+<div class="card shadow m-3" style="width: 18rem;">
+    <div class="card-body">
+        <a href="/brand_gear_list/{{ brand.brand_name.replace(' ', '-').lower() }}">{{ brand.brand_name }}</a>
+    </div>
+</div>
+{% endfor %}
+
+
+{% endblock %}

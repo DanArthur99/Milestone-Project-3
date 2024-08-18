@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for, flash
 from review_app import app, db, login_user, LoginManager, login_required, logout_user, current_user
 from review_app.models import User, Gear, Category, Brand, Review
-from review_app.forms import LoginForm, SignUpForm, AddReviewForm, SearchForm
+from review_app.forms import LoginForm, SignUpForm, AddReviewForm, SearchForm, AddProductForm
 import bcrypt
 
 login_manager = LoginManager()
@@ -146,12 +146,49 @@ def delete_review(id):
         reviews = Review.query.filter_by(gear_id=review.gear_id).all() 
         return render_template("about_gear.html", form=form, reviews=reviews, title=gear.name)
 
+@app.route("/categories")
+def categories():
+    form = SearchForm()
+    categories = Category.query.order_by(Category.category_name).all()
+    return render_template("categories.html", categories=categories, form=form)
+
+@app.route("/brands")
+def brands():
+    form = SearchForm()
+    brands = Brand.query.order_by(Brand.brand_name).all()
+    return render_template("brands.html", brands=brands, form=form)
+
+@app.route("/brand_gear_list/<brand>")
+def brand_gear_list(brand):
+    b_name = brand.replace("-", " ").title()
+    chosen_brand = Brand.query.filter_by(brand_name=b_name).first()
+    form = SearchForm()
+    gear = Gear.query.filter_by(brand_id=chosen_brand.id).all()
+    return render_template("brand_gear_list.html", gear=gear, form=form, title=b_name)
+
+@app.route("/category_gear_list/<category>")
+def category_gear_list(category):
+    c_name = category.replace("-", " ").title()
+    chosen_category = Category.query.filter_by(category_name=c_name).first()
+    form = SearchForm()
+    gear = Gear.query.filter_by(category_id=chosen_category.id).all()
+    return render_template("category_gear_list.html", gear=gear, form=form, title=c_name)
 
 
 @app.route("/add_product", methods=["GET", "POST"])
 @login_required
 def add_product():
-    form = SearchForm()
+    form = AddProductForm()
+    if form.validate_on_submit():
+        product = Gear(
+            name=form.name.data,
+            brand_id = form.brand.data,
+            category_id = form.category.data
+        )
+        db.session.add(product)
+        db.session.commit()
+        flash("Your product has been added")
+        return redirect(url_for("home"))
     return render_template("add_product.html", form=form)
 
 @app.route("/about_gear/<gear>")
