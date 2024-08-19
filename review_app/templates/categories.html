@@ -11,7 +11,7 @@
         {% for category in categories %}
         <div class="card shadow col-3 m-1" style="width: 18rem;">
             <div class="card-body">
-                <a href="/category_gear_list/{{ category.category_name.replace(' ', '-').lower() }}">{{
+                <a href="/category_gear_list/{{ category.id }}">{{
                     category.category_name }}</a>
             </div>
         </div>

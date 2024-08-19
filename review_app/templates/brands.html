@@ -11,7 +11,7 @@
         {% for brand in brands %}
         <div class="card shadow col-3 m-1" style="width: 18rem;">
             <div class="card-body">
-                <a href="/brand_gear_list/{{ brand.brand_name.replace(' ', '-').lower() }}">{{ brand.brand_name }}</a>
+                <a href="/brand_gear_list/{{ brand.id }}">{{ brand.brand_name }}</a>
             </div>
         </div>
         {% endfor %}

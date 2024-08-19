@@ -86,11 +86,10 @@ def search():
         gear_items = gear_items.order_by(Gear.name).all()
         return render_template("search.html", form=form, searched=gear_searched, gear_items=gear_items)
 
-@app.route("/add_review/<gear>", methods=["GET", "POST"])
+@app.route("/add_review/<int:gear_id>", methods=["GET", "POST"])
 @login_required
-def add_review(gear):
-    gear_name = gear.replace("-", " ").title()
-    gear_item = Gear.query.filter_by(name=gear_name).first()
+def add_review(gear_id):
+    gear_item = Gear.query.filter_by(id=gear_id).first()
     reviews = Review.query.filter_by(gear_id=gear_item.id).all()
     review_user_ids = set()
     for review in reviews:
@@ -102,7 +101,7 @@ def add_review(gear):
         current_user_id = current_user.id 
         if current_user_id in review_user_ids:
             flash("You have already written a review for this product")
-            return redirect(url_for("about_gear", gear=gear))
+            return redirect(url_for("about_gear", gear_id=gear_item.id))
         else:
             review = Review(
                 review_contents=review_content,
@@ -113,7 +112,7 @@ def add_review(gear):
             db.session.add(review)
             db.session.commit()
             flash("Thanks for your product review")
-            return redirect(url_for("about_gear", gear=gear))
+            return redirect(url_for("about_gear", gear_id=gear_item.id))
     return render_template("add_review.html", form=form, title=gear_item.name)
 
 @app.route("/edit_review/<int:id>", methods=["GET", "POST"])
@@ -122,17 +121,20 @@ def edit_review(id):
     review = Review.query.get_or_404(id)
     form = AddReviewForm()
     gear = Gear.query.filter_by(id=review.gear_id).first()
-    gear_name = gear.name.replace(" ", "-").lower()
-    if form.validate_on_submit():
-        review.review_contents = form.review.data
-        review.review_rating = form.rating.data
-        db.session.add(review)
-        db.session.commit()
-        flash("Your review has been updated")
-        return redirect(url_for("about_gear", gear=gear_name))
-    form.review.data = review.review_contents
-    form.rating.data = review.review_rating
-    return render_template("edit_review", title=gear.name, form=form)
+    if review.user_id != current_user.id:
+        flash("You are not authorized to access this page")
+        return redirect(url_for("home"))
+    else:
+        if form.validate_on_submit():
+            review.review_contents = form.review.data
+            review.review_rating = form.rating.data
+            db.session.add(review)
+            db.session.commit()
+            flash("Your review has been updated")
+            return redirect(url_for("about_gear", gear=gear.id))
+        form.review.data = review.review_contents
+        form.rating.data = review.review_rating
+        return render_template("edit_review.html", title=gear.name, form=form)
 
 @app.route("/delete_review/<int:id>")
 @login_required
@@ -163,21 +165,19 @@ def brands():
     brands = Brand.query.order_by(Brand.brand_name).all()
     return render_template("brands.html", brands=brands, form=form)
 
-@app.route("/brand_gear_list/<brand>")
-def brand_gear_list(brand):
-    b_name = brand.replace("-", " ").title()
-    chosen_brand = Brand.query.filter_by(brand_name=b_name).first()
+@app.route("/brand_gear_list/<int:brand_id>")
+def brand_gear_list(brand_id):
+    brand = Brand.query.filter_by(id=brand_id).first()
     form = SearchForm()
-    gear = Gear.query.filter_by(brand_id=chosen_brand.id).all()
-    return render_template("brand_gear_list.html", gear=gear, form=form, title=b_name)
+    gear = Gear.query.filter_by(brand_id=brand.id).all()
+    return render_template("brand_gear_list.html", gear=gear, form=form, title=brand.brand_name)
 
-@app.route("/category_gear_list/<category>", methods=["GET", "POST"])
-def category_gear_list(category):
-    c_name = category.replace("-", " ").title()
-    chosen_category = Category.query.filter_by(category_name=c_name).first()
+@app.route("/category_gear_list/<int:category_id>", methods=["GET", "POST"])
+def category_gear_list(category_id):
+    category = Category.query.filter_by(id=category_id).first()
     form = SearchForm()
-    gear = Gear.query.filter_by(category_id=chosen_category.id).all()
-    return render_template("category_gear_list.html", gear=gear, form=form, title=c_name)
+    gear = Gear.query.filter_by(category_id=category.id).all()
+    return render_template("category_gear_list.html", gear=gear, form=form, title=category.category_name)
 
 
 @app.route("/user_reviews/<int:id>", methods=["GET", "POST"])
@@ -185,8 +185,12 @@ def category_gear_list(category):
 def user_reviews(id):
     form = SearchForm()
     user = User.query.get_or_404(id)
-    user_reviews = Review.query.filter_by(user_id=user.id)
-    return render_template("user_reviews.html", user_reviews=user_reviews, form=form)
+    if current_user.id != id:
+        flash("You are not authorized to access this page")
+        return redirect(url_for("home"))
+    else:
+        user_reviews = Review.query.filter_by(user_id=user.id)
+        return render_template("user_reviews.html", user_reviews=user_reviews, form=form)
 
 @app.route("/add_product", methods=["GET", "POST"])
 @login_required
@@ -204,11 +208,10 @@ def add_product():
         return redirect(url_for("home"))
     return render_template("add_product.html", form=form)
 
-@app.route("/about_gear/<gear>")
-def about_gear(gear):
+@app.route("/about_gear/<int:gear_id>")
+def about_gear(gear_id):
     form = SearchForm()
-    gear_name = gear.replace("-", " ").title()
-    gear_item = Gear.query.filter_by(name=gear_name).first()
+    gear_item = Gear.query.filter_by(id=gear_id).first()
     reviews = Review.query.filter_by(gear_id=gear_item.id).all()
-    return render_template("about_gear.html", form=form, title=gear_item.name, reviews=reviews)
+    return render_template("about_gear.html", form=form, title=gear_item.name, gear_id=gear_item.id, reviews=reviews)
 
