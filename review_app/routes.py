@@ -224,7 +224,7 @@ def category_gear_list(category_id):
 def user_reviews(id):
     form = SearchForm()
     user = User.query.get_or_404(id)
-    if not current_user.admin:
+    if not current_user.admin and current_user.id != id:
         flash("You are not authorized to access this page")
         return redirect(url_for("home"))
     else:
