@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <header class="col-12 text-center">
+            <h1>404 Error</h1>
+        </header>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-12 text-center">
+            <p>Oops, looks like we can't find that page, click the button below to get back to safety</p>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-12 text-center">
+            <a class="btn btn-success" href="{{ url_for('home') }}">Home</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
