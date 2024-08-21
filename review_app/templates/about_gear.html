@@ -12,6 +12,16 @@
     </div>
 </div>
 
+{% if current_user.admin %}
+
+<div class="row justify-content-center">
+    <div class="col-12 text-center mt-3">
+        <a class="btn btn-secondary" href="{{ url_for('home') }}">Delete this item?</a>
+    </div>
+</div>
+
+
+{% endif %}
 
 <div class="row justify-content-center">
     {% for review in reviews %}

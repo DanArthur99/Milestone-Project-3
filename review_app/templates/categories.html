@@ -13,6 +13,10 @@
             <div class="card-body">
                 <a href="/category_gear_list/{{ category.id }}">{{
                     category.category_name }}</a>
+                {% if current_user.admin %}
+                <a href="{{ url_for('home') }}" class="btn btn-success m-1 col-12">Edit Category</a>
+                <a href="{{ url_for('home') }}" class="btn btn-danger m-1 col-12">Delete Category</a>
+                {% endif %}
             </div>
         </div>
         {% endfor %}

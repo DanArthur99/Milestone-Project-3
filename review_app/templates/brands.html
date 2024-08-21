@@ -12,14 +12,14 @@
         <div class="card shadow col-3 m-1" style="width: 18rem;">
             <div class="card-body">
                 <a href="/brand_gear_list/{{ brand.id }}">{{ brand.brand_name }}</a>
+                {% if current_user.admin %}
+                <a href="{{ url_for('home') }}" class="btn btn-success col-12 m-1">Edit Brand</a>
+                <a href="{{ url_for('home') }}" class="btn btn-danger col-12 m-1">Delete Brand</a>
+                {% endif %}
             </div>
         </div>
         {% endfor %}
     </div>
 </div>
-
-
-
-
 
 {% endblock %}

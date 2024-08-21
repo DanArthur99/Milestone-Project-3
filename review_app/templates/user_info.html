@@ -5,7 +5,7 @@
 <div class="container">
     <header>
         <div class="row justify-content-center">
-            <h1 class="col-12 text-center mt-5">Hello {{ current_user.username}}</h1>
+            <h1 class="col-12 text-center mt-5">Info for {{ user.username }}</h1>
         </div>
     </header>
     <section class="mt-5">
@@ -14,31 +14,30 @@
         </div>
         <div class="row justify-content-center">
             <p class="col-6 text-end"><strong>Username:</strong></p>
-            <p class="col-6">{{ current_user.username }}</p>
+            <p class="col-6">{{ user.username }}</p>
         </div>
         <div class="row justify-content-center">
             <p class="col-6 text-end"><strong>Email:</strong></p>
-            <p class="col-6">{{ current_user.email }}</p>
+            <p class="col-6">{{ user.email }}</p>
         </div>
         <div class="row justify-content-center">
             <p class="col-6 text-end"><strong>Password:</strong></p>
             <p class="col-6">****************</p>
         </div>
+        {% if user.admin %}
         <div class="row justify-content-center">
-            <p class="col-6 text-end"><strong>Your Reviews:</strong></p>
-            <p class="col-6">To see your reviws, <a href="{{ url_for('user_reviews', id=current_user.id)}}">click here:</a></p>
+            <p class="col-6 text-end"><strong>Admin:</strong></p>
+            <p class="col-6">Yes</p>
         </div>
-    </section>
-    <section class="mt-5">
-        <div class="row justify-content-center mb-3">
-            <div class="col-12">
-                <a href="url_for('update_user', id=current_user.id)">Update Details</a>
-            </div>
+        {% else %}
+        <div class="row justify-content-center">
+            <p class="col-6 text-end"><strong>Admin:</strong></p>
+            <p class="col-6">No</p>
         </div>
-        <div class="row justify-content-center mb-3">
-            <div class="col-12">
-                <a href="url_for('update_password', id=current_user.id)">Update Password</a>
-            </div>
+        {% endif %}
+        <div class="row justify-content-center">
+            <p class="col-6 text-end"><strong>Reviews:</strong></p>
+            <p class="col-6">To see {{ user.username }}'s reviews, <a href="{{ url_for('user_reviews', id=user.id)}}">click here:</a></p>
         </div>
     </section>
 </div>
