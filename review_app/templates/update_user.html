@@ -4,12 +4,12 @@
 <div class="container">
     <div class="row justify-content-center">
         <header class="col-12 text-center mt-5">
-            <h1>Sign Up</h1>
+            <h1>Update Details</h1>
         </header>
     </div>
-    <section id="signup">
+    <section id="update_user">
         <div class="row justify-content-center">
-            <form class="col-md-6 mt-5" action="{{ url_for('sign_up') }}" method="POST">
+            <form class="col-md-6 mt-5" action="{{ url_for('update_user', id=user_id) }}" method="POST">
                 {{ form.hidden_tag() }}
         
                 {{ form.username.label(class="form-label") }}

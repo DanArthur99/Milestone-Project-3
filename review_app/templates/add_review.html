@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1 class="text-center mt-3">{{ title }}</h1>
+<h1 class="text-center mt-3">{{ title.replace("-", " ").title() }}</h1>
 <div class="container">
     <section id="add-review">
         <div class="row justify-content-center">

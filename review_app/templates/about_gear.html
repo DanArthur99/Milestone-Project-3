@@ -2,13 +2,13 @@
 {% block content %}
 
 <div class="row justify-content-center">
-    <h1 class="col-6 text-center mt-5">{{ title }}</h1>
+    <h1 class="col-6 text-center mt-5">{{ title.replace("-", " ").title() }}</h1>
 </div>
 
 
 <div class="row justify-content-center">
     <div class="col-4 mt-3 text-center">
-        <a class="btn btn-primary" href="/add_review/{{ gear_id }}">Add Review</a>
+        <a class="btn btn-primary" href="{{ url_for('add_review', gear_id=gear_id) }}">Add Review</a>
     </div>
 </div>
 
@@ -16,10 +16,9 @@
 
 <div class="row justify-content-center">
     <div class="col-12 text-center mt-3">
-        <a class="btn btn-secondary" href="{{ url_for('home') }}">Delete this item?</a>
+        <a class="btn btn-secondary" href="{{ url_for('delete_gear', id=gear_id) }}">Delete this item?</a>
     </div>
 </div>
-
 
 {% endif %}
 

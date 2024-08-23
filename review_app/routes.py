@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for, flash
 from review_app import app, db, login_user, LoginManager, login_required, logout_user, current_user
 from review_app.models import User, Gear, Category, Brand, Review
-from review_app.forms import LoginForm, SignUpForm, AddReviewForm, SearchForm, AddProductForm, UpdateDetailsForm
+from review_app.forms import LoginForm, SignUpForm, AddReviewForm, SearchForm, AddProductForm, UpdateDetailsForm, NewPasswordForm
 import bcrypt
 
 login_manager = LoginManager()
@@ -47,12 +47,13 @@ def logout():
 @app.route("/dashboard/<int:id>", methods=["GET", "POST"])
 @login_required
 def dashboard(id):
-    if current_user.id != id:
+    if not current_user.admin and current_user.id != id:
         flash("You are not authorized to access this page")
         return redirect(url_for("home"))
     else:
         form = SearchForm()
-        return render_template("dashboard.html", form=form)
+        user = User.query.get_or_404(id)
+        return render_template("dashboard.html", form=form, user=user)
 
 @app.route("/sign_up", methods=["GET", "POST"])
 def sign_up():
@@ -113,17 +114,54 @@ def list_of_users():
         return render_template("list_of_users.html", form=form, searched=users_searched, users=users)
 
 
-@app.route("/user_info/<int:id>", methods=["GET", "POST"])
+@app.route("/update_user/<int:id>", methods=["GET", "POST"])
 @login_required
-def user_info(id):  
-    if not current_user.admin:
+def update_user(id):
+    form = UpdateDetailsForm()
+    user = User.query.get_or_404(id)
+    if not current_user.admin and current_user.id != id:
         flash("You are not authorized to access this page")
         return redirect(url_for("home"))
     else:
-        form = SearchForm()
-        user = User.query.get_or_404(id)
-        return render_template("user_info.html", form=form, user=user)
+        if form.validate_on_submit():
+            user.username = form.username.data
+            user.email = form.email.data
+            db.session.add(user)
+            db.session.commit()
+            flash("Your details have been updated")
+            return redirect(url_for("home"))
+        form.username.data = user.username
+        form.email.data = user.email
+        return render_template("update_user.html", form=form, user_id=id)
 
+
+
+@app.route("/update_password/<int:id>", methods=["GET", "POST"])
+@login_required
+def update_password(id):
+    if not current_user.admin and current_user.id != id:
+        flash("You are not authorized to access this page")
+        return redirect(url_for("home"))
+    else:
+        form = NewPasswordForm()
+        user = User.query.get_or_404(id)
+        if form.validate_on_submit():
+            password = bytes(form.password.data, "utf-8")
+            confirm_password = bytes(form.confirm_password.data, "utf-8")
+            if password != confirm_password:
+                flash("Passwords don't match")
+            else:
+                try:
+                    hashed_pw = bcrypt.hashpw(password, bcrypt.gensalt()) 
+                    user.password = hashed_pw.decode("utf-8")
+                    db.session.add(user)
+                    db.session.commit()
+                    flash("Password updated")
+                    return redirect(url_for("home"))
+                except:            
+                    flash("There was an error updating your password")
+                    return redirect(url_for("home"))
+        return render_template("update_password.html", form=form, user=user)
 
 @app.route("/add_review/<int:gear_id>", methods=["GET", "POST"])
 @login_required
@@ -135,17 +173,14 @@ def add_review(gear_id):
         review_user_ids.add(review.user_id)
     form = AddReviewForm()
     if form.validate_on_submit():
-        review_content = form.review.data
-        rating = form.rating.data
-        current_user_id = current_user.id 
-        if current_user_id in review_user_ids:
+        if current_user.id in review_user_ids:
             flash("You have already written a review for this product")
             return redirect(url_for("about_gear", gear_id=gear_item.id))
         else:
             review = Review(
-                review_contents=review_content,
-                review_rating=rating,
-                user_id=current_user_id,
+                review_contents=form.review.data,
+                review_rating=form.rating.data,
+                user_id=current_user.id,
                 gear_id=gear_item.id
             )
             db.session.add(review)
@@ -159,8 +194,8 @@ def add_review(gear_id):
 def edit_review(id):
     review = Review.query.get_or_404(id)
     form = AddReviewForm()
-    gear = Gear.query.filter_by(id=review.gear_id).first()
-    if review.user_id != current_user.id:
+    gear = Gear.query.get_or_404(review.gear.id)
+    if not current_user.admin and current_user.id != review.user.id:
         flash("You are not authorized to access this page")
         return redirect(url_for("home"))
     else:
@@ -170,7 +205,7 @@ def edit_review(id):
             db.session.add(review)
             db.session.commit()
             flash("Your review has been updated")
-            return redirect(url_for("about_gear", gear=gear.id))
+            return redirect(url_for("about_gear", gear_id=gear.id))
         form.review.data = review.review_contents
         form.rating.data = review.review_rating
         return render_template("edit_review.html", title=gear.name, form=form)
@@ -184,13 +219,82 @@ def delete_review(id):
     try:
         db.session.delete(review)
         db.session.commit()
-        flash("Review successfully deleted")
-        reviews = Review.query.filter_by(gear_id=review.gear_id).all() 
-        return render_template("about_gear.html", form=form, reviews=reviews, title=gear.name)
+        flash("Review successfully deleted")       
     except:
         flash("There seems to be a problem with deleting this post")
-        reviews = Review.query.filter_by(gear_id=review.gear_id).all() 
-        return render_template("about_gear.html", form=form, reviews=reviews, title=gear.name)
+    return redirect(url_for("about_gear", form=form, id=gear.id))
+
+@app.route("/delete_gear/<int:id>")
+@login_required
+def delete_gear(id):
+    form = SearchForm()
+    if not current_user.admin:
+        flash("You are not authorized for this functionality")
+        return redirect(url_for("home", form=form))
+    else:
+        gear = Gear.query.get_or_404(id)
+        try:
+            db.session.delete(gear)
+            db.session.commit()
+            flash("Gear successfully deleted")
+            return redirect(url_for("home", form=form))
+        except:
+            flash("There seems to be a problem with deleting this item")
+            return redirect(url_for("home"), form=form)
+
+@app.route("/delete_brand/<int:id>")
+@login_required
+def delete_brand(id):
+    form = SearchForm()
+    if not current_user.admin:
+        flash("You are not authorized for this functionality")
+        return redirect(url_for("home", form=form))
+    else:
+        brand = Brand.query.get_or_404(id)
+        try:
+            db.session.delete(brand)
+            db.session.commit()
+            flash("Brand successfully deleted")
+            return redirect(url_for("home", form=form))
+        except:
+            flash("There seems to be a problem with deleting this brand")
+            return redirect(url_for("home"), form=form)
+    
+@app.route("/delete_category/<int:id>")
+@login_required
+def delete_category(id):
+    form = SearchForm()
+    if not current_user.admin:
+        flash("You are not authorized for this functionality")
+        return redirect(url_for("home", form=form))
+    else:
+        category = Category.query.get_or_404(id)
+        try:
+            db.session.delete(category)
+            db.session.commit()
+            flash("Category successfully deleted")
+            return redirect(url_for("home", form=form))
+        except:
+            flash("There seems to be a problem with deleting this category")
+            return redirect(url_for("home"), form=form)
+
+@app.route("/delete_user/<int:id>")
+@login_required
+def delete_user(id):
+    form = SearchForm()
+    if not current_user.admin:
+        flash("You are not authorized for this functionality")
+        return redirect(url_for("home", form=form))
+    else:
+        user = User.query.get_or_404(id)
+        try:
+            db.session.delete(user)
+            db.session.commit()
+            flash("User successfully deleted")
+            return redirect(url_for("home", form=form))
+        except:
+            flash("There seems to be a problem with deleting this item")
+            return redirect(url_for("home"), form=form)
 
 @app.route("/categories")
 def categories():
@@ -238,7 +342,7 @@ def add_product():
     form = AddProductForm()
     if form.validate_on_submit():
         product = Gear(
-            name=form.name.data,
+            name=form.name.data.replace(" ", "-").lower(),
             brand_id = form.brand.data,
             category_id = form.category.data
         )

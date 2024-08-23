@@ -14,7 +14,7 @@
                 <a href="/brand_gear_list/{{ brand.id }}">{{ brand.brand_name }}</a>
                 {% if current_user.admin %}
                 <a href="{{ url_for('home') }}" class="btn btn-success col-12 m-1">Edit Brand</a>
-                <a href="{{ url_for('home') }}" class="btn btn-danger col-12 m-1">Delete Brand</a>
+                <a href="{{ url_for('delete_brand', id=brand.id) }}" class="btn btn-danger col-12 m-1">Delete Brand</a>
                 {% endif %}
             </div>
         </div>

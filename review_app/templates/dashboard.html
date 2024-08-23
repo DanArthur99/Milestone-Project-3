@@ -5,41 +5,65 @@
 <div class="container">
     <header>
         <div class="row justify-content-center">
-            <h1 class="col-12 text-center mt-5">Hello {{ current_user.username}}</h1>
+            {% if current_user.id == user.id %}
+            <h1 class="col-12 text-center mt-5">Hello {{ user.username}}</h1>
+            {% else %}
+            <h1 class="col-12 text-center mt-5">Info for {{ user.username }}</h1>
+            {% endif %}
         </div>
     </header>
     <section class="mt-5">
         <div class="row justify-content-center mb-3">
-            <h2 class="col-12 text-center">Your Details</h2>
+            <h2 class="col-12 text-center">Details</h2>
         </div>
         <div class="row justify-content-center">
             <p class="col-6 text-end"><strong>Username:</strong></p>
-            <p class="col-6">{{ current_user.username }}</p>
+            <p class="col-6">{{ user.username }}</p>
         </div>
         <div class="row justify-content-center">
             <p class="col-6 text-end"><strong>Email:</strong></p>
-            <p class="col-6">{{ current_user.email }}</p>
+            <p class="col-6">{{ user.email }}</p>
         </div>
         <div class="row justify-content-center">
             <p class="col-6 text-end"><strong>Password:</strong></p>
             <p class="col-6">****************</p>
         </div>
+        {% if current_user.admin %}
+        {% if user.admin %}
+        <div class="row justify-content-center">
+            <p class="col-6 text-end"><strong>Admin:</strong></p>
+            <p class="col-6">Yes</p>
+        </div>
+        {% else %}
+        <div class="row justify-content-center">
+            <p class="col-6 text-end"><strong>Admin:</strong></p>
+            <p class="col-6">No</p>
+        </div>
+        {% endif %}
+        {% endif %}
         <div class="row justify-content-center">
             <p class="col-6 text-end"><strong>Your Reviews:</strong></p>
-            <p class="col-6">To see your reviws, <a href="{{ url_for('user_reviews', id=current_user.id)}}">click here:</a></p>
+            <p class="col-6">To see your reviws, <a href="{{ url_for('user_reviews', id=user.id)}}">click here:</a></p>
         </div>
     </section>
     <section class="mt-5">
         <div class="row justify-content-center mb-3">
             <div class="col-12">
-                <a href="url_for('update_user', id=current_user.id)">Update Details</a>
+                <a href="{{ url_for('update_user', id=user.id) }}">Update Details</a>
             </div>
         </div>
         <div class="row justify-content-center mb-3">
             <div class="col-12">
-                <a href="url_for('update_password', id=current_user.id)">Update Password</a>
+                <a href="{{ url_for('update_password', id=user.id) }}">Update Password</a>
             </div>
         </div>
+        {% if current_user.admin and current_user.id != user.id %}
+        <div class="row justify-content-center mb-3">
+            <div class="col-12">
+                <a href="{{ url_for('delete_user', id=user.id) }}">Delete User</a>
+            </div>
+        </div>
+        {% endif %}
     </section>
 </div>
 

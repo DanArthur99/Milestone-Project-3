@@ -15,7 +15,7 @@
         {% for gear_item in gear %}
         <div class="card shadow m-1 col-3" style="width: 18rem;">
             <div class="card-body">
-                <a href="/about_gear/{{ gear_item.id }}">{{ gear_item.name }}</a>
+                <a href="/about_gear/{{ gear_item.id }}">{{ gear_item.name.replace("-", " ").title() }}</a>
             </div>
         </div>
         {% endfor %}
