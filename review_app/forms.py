@@ -14,12 +14,20 @@ class SignUpForm(FlaskForm):
     submit = SubmitField("Submit")
 
 class AddReviewForm(FlaskForm):
-    review = StringField("Enter your review", widget=TextArea())
+    review = StringField("Enter your review", widget=TextArea(), validators=[DataRequired()])
     rating = SelectField(u"Rating out of 5", choices=[(0, "0"), (1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5")], validators=[DataRequired()])
     submit = SubmitField("Submit")
 
+class AddBrandForm(FlaskForm):
+    brand_name = StringField("Enter Brand Name", widget=TextArea(), validators=[DataRequired()])
+    submit = SubmitField("Submit")
+
+class AddCategoryForm(FlaskForm):
+    category_name = StringField("Enter Category Name", widget=TextArea(), validators=[DataRequired()])
+    submit = SubmitField("Submit")
+
 class AddProductForm(FlaskForm):
-    name = StringField("Enter the name of the product", widget=TextArea())
+    name = StringField("Enter the name of the product", widget=TextArea(), validators=[DataRequired()])
     brand = SelectField(u"Select a Brand", choices=[(brand.id, brand.brand_name) for brand in Brand.query.order_by(Brand.brand_name)], validators=[DataRequired()])
     category = SelectField(u"Select a Category", choices=[(category.id, category.category_name) for category in Category.query.order_by(Category.category_name)], validators=[DataRequired()])
     submit = SubmitField("Submit")

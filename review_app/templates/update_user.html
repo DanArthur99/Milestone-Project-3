@@ -4,12 +4,16 @@
 <div class="container">
     <div class="row justify-content-center">
         <header class="col-12 text-center mt-5">
-            <h1>Update Details</h1>
+            {% if current_user.id == user.id %}
+            <h1>Update Your Details</h1>
+            {% else %}
+            <h1>Update Details for {{ user.username }}</h1>
+            {% endif %}
         </header>
     </div>
     <section id="update_user">
         <div class="row justify-content-center">
-            <form class="col-md-6 mt-5" action="{{ url_for('update_user', id=user_id) }}" method="POST">
+            <form class="col-md-6 mt-5" action="{{ url_for('update_user', id=user.id) }}" method="POST">
                 {{ form.hidden_tag() }}
         
                 {{ form.username.label(class="form-label") }}

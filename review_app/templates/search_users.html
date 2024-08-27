@@ -2,18 +2,20 @@
 {% block content %}
 
 <div class="container">
-    <form method="POST" action="{{ url_for('list_of_users') }}" class="d-flex" role="search">
-        {{ form.hidden_tag() }}
-        <input class="form-control me-2" type="search" id="search_bar" placeholder="Search users" aria-label="Search"
-            name="searched" required>
-        <button class="btn btn-outline-success" type="submit">Search</button>
-    </form>
+    <div class="row mt-5 justify-content-center">
+        <form method="POST" action="{{ url_for('list_of_users') }}" class="d-flex col-6" role="search">
+            {{ form.hidden_tag() }}
+            <input class="form-control me-2" type="search" id="search_bar" placeholder="Search users" aria-label="Search"
+                name="searched" required>
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+    </div> 
 </div>
 
 
 <div class="row mt-1 mb-5 justify-content-center">
     {% for user in users %}
-    <div class="card shadow col-3 m-1" style="width: 18rem;">
+    <div class="card shadow col-1 mt-5 m-1 width-18rem">
         <div class="card-body">
             <a href="{{ url_for('dashboard', id=user.id) }}">{{ user.username }}</a>
         </div>

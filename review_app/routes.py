@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for, flash
 from review_app import app, db, login_user, LoginManager, login_required, logout_user, current_user
 from review_app.models import User, Gear, Category, Brand, Review
-from review_app.forms import LoginForm, SignUpForm, AddReviewForm, SearchForm, AddProductForm, UpdateDetailsForm, NewPasswordForm
+from review_app.forms import LoginForm, SignUpForm, AddReviewForm, SearchForm, AddProductForm, UpdateDetailsForm, NewPasswordForm, AddBrandForm, AddCategoryForm
 import bcrypt
 
 login_manager = LoginManager()
@@ -15,7 +15,7 @@ def load_user(user_id):
 @app.route("/")
 def home():
     form = SearchForm()
-    return render_template("base.html", form=form)
+    return render_template("home.html", form=form)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -128,11 +128,14 @@ def update_user(id):
             user.email = form.email.data
             db.session.add(user)
             db.session.commit()
-            flash("Your details have been updated")
-            return redirect(url_for("home"))
+            if current_user.id == user.id:
+                flash("Your details have been updated")
+            else:
+                flash(f"{user.username}'s details have been updated")
+            return redirect(url_for("dashboard", id=user.id))
         form.username.data = user.username
         form.email.data = user.email
-        return render_template("update_user.html", form=form, user_id=id)
+        return render_template("update_user.html", form=form, user=user)
 
 
 
@@ -242,23 +245,95 @@ def delete_gear(id):
             flash("There seems to be a problem with deleting this item")
             return redirect(url_for("home"), form=form)
 
+@app.route("/add_brand", methods=["GET", "POST"])
+@login_required
+def add_brand():
+    form = AddBrandForm()
+    if not current_user.admin:
+        flash("You are not authorized to access this page")
+        return redirect(url_for("brands"))
+    else:
+        if form.validate_on_submit():
+            brand = Brand(
+                brand_name = form.brand_name.data.replace(" ", "-").lower()
+            )
+            db.session.add(brand)
+            db.session.commit()
+            flash("This brand has been added")
+            return redirect(url_for("brands"))
+        return render_template("add_brand.html", form=form)
+
+@app.route("/add_category", methods=["GET", "POST"])
+@login_required
+def add_category():
+    form = AddCategoryForm()
+    if not current_user.admin:
+        flash("You are not authorized to access this page")
+        return redirect(url_for("categories"))
+    else:
+        if form.validate_on_submit():
+            category = Category(
+                category_name = form.category_name.data.replace(" ", "-").lower()
+            )
+            db.session.add(category)
+            db.session.commit()
+            flash("This category has been added")
+            return redirect(url_for("categories"))
+        return render_template("add_category.html", form=form)
+
+@app.route("/edit_brand/<int:id>", methods=["GET", "POST"])
+@login_required
+def edit_brand(id):
+    brand = Brand.query.get_or_404(id)
+    form = AddBrandForm()
+    if not current_user.admin:
+        flash("You are not authorized to access this page")
+        return redirect(url_for("home"))
+    else:
+        if form.validate_on_submit():
+            brand.brand_name = form.brand_name.data.replace(" ", "-").lower()
+            db.session.add(brand)
+            db.session.commit()
+            flash("This brand has been updated")
+            return redirect(url_for("brands"))
+        form.brand_name.data = brand.brand_name.replace("-", " ").title()
+        return render_template("edit_brand.html", form=form, title=brand.brand_name.replace("-", " ").title())
+
+@app.route("/edit_category/<int:id>", methods=["GET", "POST"])
+@login_required
+def edit_category(id):
+    category = Category.query.get_or_404(id)
+    form = AddCategoryForm()
+    if not current_user.admin:
+        flash("You are not authorized to access this page")
+        return redirect(url_for("categories"))
+    else:
+        if form.validate_on_submit():
+            category.category_name = form.brand_name.data.replace(" ", "-").lower()
+            db.session.add(category)
+            db.session.commit()
+            flash("This brand has been updated")
+            return redirect(url_for("categories"))
+        form.category_name.data = category.category_name.replace("-", " ").title()
+        return render_template("edit_brand.html", form=form, title=category.category_name.replace("-", " ").title())
+
 @app.route("/delete_brand/<int:id>")
 @login_required
 def delete_brand(id):
     form = SearchForm()
     if not current_user.admin:
         flash("You are not authorized for this functionality")
-        return redirect(url_for("home", form=form))
+        return redirect(url_for("brands"))
     else:
         brand = Brand.query.get_or_404(id)
         try:
             db.session.delete(brand)
             db.session.commit()
             flash("Brand successfully deleted")
-            return redirect(url_for("home", form=form))
+            return redirect(url_for("brands"))
         except:
             flash("There seems to be a problem with deleting this brand")
-            return redirect(url_for("home"), form=form)
+            return redirect(url_for("brands"))
     
 @app.route("/delete_category/<int:id>")
 @login_required
@@ -266,17 +341,17 @@ def delete_category(id):
     form = SearchForm()
     if not current_user.admin:
         flash("You are not authorized for this functionality")
-        return redirect(url_for("home", form=form))
+        return redirect(url_for("categories"))
     else:
         category = Category.query.get_or_404(id)
         try:
             db.session.delete(category)
             db.session.commit()
             flash("Category successfully deleted")
-            return redirect(url_for("home", form=form))
+            return redirect(url_for("categories"))
         except:
             flash("There seems to be a problem with deleting this category")
-            return redirect(url_for("home"), form=form)
+            return redirect(url_for("categories"))
 
 @app.route("/delete_user/<int:id>")
 @login_required
