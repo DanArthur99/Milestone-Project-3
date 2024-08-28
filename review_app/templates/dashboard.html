@@ -6,9 +6,9 @@
     <header>
         <div class="row justify-content-center">
             {% if current_user.id == user.id %}
-            <h1 class="col-12 text-center mt-5">Hello {{ user.username}}</h1>
+            <h1 class="col-12 text-center mt-5 heading-font">Hello {{ user.username}}</h1>
             {% else %}
-            <h1 class="col-12 text-center mt-5">Info for {{ user.username }}</h1>
+            <h1 class="col-12 text-center mt-5 heading-font">Info for {{ user.username }}</h1>
             {% endif %}
         </div>
     </header>
@@ -52,18 +52,40 @@
     </section>
     <section class="mt-5">
         <div class="row justify-content-center mb-3">
-            <a href="{{ url_for('update_user', id=user.id) }}" class="col-12 text-center">Update Details</a>
+            <a href="{{ url_for('update_user', id=user.id) }}" class="text-center btn btn-success button-width">Update Details</a>
         </div>
         <div class="row justify-content-center mb-3">
-            <a href="{{ url_for('update_password', id=user.id) }}" class="col-12 text-center">Update Password</a>
+            <a href="{{ url_for('update_password', id=user.id) }}" class="text-center btn btn-info button-width">Update Password</a>
         </div>
         <div class="row justify-content-center mb-3">
             {% if current_user.admin and current_user.id != user.id %}
-            <a href="{{ url_for('delete_user', id=user.id) }}" class="col-12 text-center">Delete User</a>
+            <button type="button" class="text-center btn btn-danger button-width" data-bs-toggle="modal" data-bs-target="#user-deletion-check">Delete User</button>
             {% elif not current_user.admin and current_user.id == user.id %}
-            <a href="{{ url_for('delete_user', id=user.id) }}" class="col-12 text-center">Close Account</a>
+            <button type="button" class="text-center btn btn-danger button-width" data-bs-toggle="modal" data-bs-target="#user-deletion-check">Close Account</button>
             {% endif %}
-        </div>     
+        </div>
+        <div class="modal" id="user-deletion-check" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Delete brand?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {% if current_user.admin and current_user.id != user.id %}
+                        <p>Are you sure you want to delete this user?</p>
+                        {% elif not current_user.admin and current_user.id == user.id %}
+                        <p>Are you sure you want to close your account?</p>
+                        {% endif %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger col-2" data-bs-dismiss="modal">No</button>
+                        <a href="{{ url_for('delete_user', id=user.id) }}"
+                            class="btn btn-success m-1 col-2">Yes</a>
+                    </div>
+                </div>
+            </div>
+        </div>    
     </section>
 </div>
 

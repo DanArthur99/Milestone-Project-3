@@ -5,9 +5,9 @@
     <div class="row justify-content-center">
         <header class="col-12 text-center mt-5">
             {% if current_user.id == user.id %}
-            <h1>Update Your Details</h1>
+            <h1 class="heading-font">Update Your Details</h1>
             {% else %}
-            <h1>Update Details for {{ user.username }}</h1>
+            <h1 class="heading-font">Update Details for {{ user.username }}</h1>
             {% endif %}
         </header>
     </div>

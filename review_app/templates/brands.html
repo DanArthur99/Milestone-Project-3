@@ -4,23 +4,42 @@
 <div class="container">
     <div class="row justify-content-center">
         <header class="col-4 text-center m-3">
-            <h1>Brands</h1>
+            <h1 class="heading-font">Brands</h1>
         </header>
     </div>
     {% if current_user.admin %}
     <div class="row justify-content-center">
-        <p class="m-3 col-12 text-center"><a href="{{ url_for('add_brand') }}">Add a new brand</a></p>
+        <a href="{{ url_for('add_brand') }}" class="m-3 col-2 text-center btn btn-secondary">Add a new brand</a>
     </div>
     {% endif %}
     <div class="row mt-1 mb-5 justify-content-center">
         {% for brand in brands %}
-        <div class="card shadow col-3 m-1" style="width: 18rem;">
+        <div class="card shadow col-3 m-1 bg-dark" style="width: 18rem;">
             <div class="card-body">
-                <a href="/brand_gear_list/{{ brand.id }}">{{ brand.brand_name.replace("-", " ").title() }}</a>
+                <a href="/brand_gear_list/{{ brand.id }}" class="text-white text-decoration-none">{{
+                    brand.brand_name.replace("-", " ").title() }}</a>
                 {% if current_user.admin %}
                 <a href="{{ url_for('edit_brand', id=brand.id) }}" class="btn btn-success col-12 m-1">Edit Brand</a>
-                <a href="{{ url_for('delete_brand', id=brand.id) }}" class="btn btn-danger col-12 m-1">Delete Brand</a>
+                <button type="button" data-bs-target="#deletion-check" data-bs-toggle="modal" class="btn btn-danger col-12 m-1">Delete Brand</button>
                 {% endif %}
+            </div>
+        </div>
+        <div class="modal" id="deletion-check" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Delete brand?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete this brand?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger col-2" data-bs-dismiss="modal">No</button>
+                        <a href="{{ url_for('delete_brand', id=brand.id) }}"
+                            class="btn btn-success m-1 col-2">Yes</a>
+                    </div>
+                </div>
             </div>
         </div>
         {% endfor %}

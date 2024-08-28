@@ -1,3 +1,39 @@
+body {
+    font-family: "Montserrat", sans-serif
+}
+
 .width-18rem {
     width: 18rem;
+}
+
+.center-align {
+    top: 50%;
+    transform: translateY(50%)
+}
+
+.home-page-header {
+    height: 50vh;
+}
+
+.bungee-tin {
+    font-family: "Bungee Tint", sans-serif;
+    font-size: 70px;
+    font-style: normal;
+}
+
+.montserrat {
+    font-family: "Montserrat", sans-serif
+}
+
+.heading-font {
+    font-family: "New Amsterdam", sans-serif;
+    font-size: 55px;
+}
+
+.smaller-font {
+    font-size: 50px;
+}
+
+.button-width {
+    width: 150px;
 }

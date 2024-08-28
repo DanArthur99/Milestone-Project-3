@@ -178,7 +178,7 @@ def add_review(gear_id):
     if form.validate_on_submit():
         if current_user.id in review_user_ids:
             flash("You have already written a review for this product")
-            return redirect(url_for("about_gear", gear_id=gear_item.id))
+            return redirect(url_for("about_gear", id=gear_item.id))
         else:
             review = Review(
                 review_contents=form.review.data,
@@ -189,7 +189,7 @@ def add_review(gear_id):
             db.session.add(review)
             db.session.commit()
             flash("Thanks for your product review")
-            return redirect(url_for("about_gear", gear_id=gear_item.id))
+            return redirect(url_for("about_gear", id=gear_item.id))
     return render_template("add_review.html", form=form, title=gear_item.name)
 
 @app.route("/edit_review/<int:id>", methods=["GET", "POST"])
@@ -216,16 +216,15 @@ def edit_review(id):
 @app.route("/delete_review/<int:id>")
 @login_required
 def delete_review(id):
-    form = SearchForm()
     review = Review.query.get_or_404(id)
-    gear = Gear.query.filter_by(id=review.gear_id).first()
+    gear = Gear.query.filter_by(id=review.gear.id).first()
     try:
         db.session.delete(review)
         db.session.commit()
         flash("Review successfully deleted")       
     except:
         flash("There seems to be a problem with deleting this post")
-    return redirect(url_for("about_gear", form=form, id=gear.id))
+    return redirect(url_for("about_gear", id=gear.id))
 
 @app.route("/delete_gear/<int:id>")
 @login_required
@@ -428,12 +427,12 @@ def add_product():
     return render_template("add_product.html", form=form)
 
 
-@app.route("/about_gear/<int:gear_id>")
-def about_gear(gear_id):
+@app.route("/about_gear/<int:id>")
+def about_gear(id):
     form = SearchForm()
-    gear_item = Gear.query.filter_by(id=gear_id).first()
+    gear_item = Gear.query.get_or_404(id)
     reviews = Review.query.filter_by(gear_id=gear_item.id).all()
-    return render_template("about_gear.html", form=form, title=gear_item.name, gear_id=gear_item.id, reviews=reviews)
+    return render_template("about_gear.html", form=form, title=gear_item.name, gear=gear_item, reviews=reviews)
 
 
 @app.errorhandler(404)

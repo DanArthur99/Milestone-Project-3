@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <header class="col-12 text-center mt-5">
-            <h1>Gear made by {{ title }}...</h1>
+            <h1 class="heading-font">Gear made by {{ title }}...</h1>
         </header>
     </div>
     <div class="row justify-content-center">
@@ -13,9 +13,9 @@
     </div>
     <div class="row justify-content-center">
         {% for gear_item in gear %}
-        <div class="card shadow m-1 col-3" style="width: 18rem;">
+        <div class="card shadow m-1 col-3 bg-dark width-18rem">
             <div class="card-body">
-                <a href="/about_gear/{{ gear_item.id }}">{{ gear_item.name.replace("-", " ").title() }}</a>
+                <a href="/about_gear/{{ gear_item.id }}" class="text-white text-decoration-none">{{ gear_item.name.replace("-", " ").title() }}</a>
             </div>
         </div>
         {% endfor %}
