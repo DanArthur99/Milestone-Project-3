@@ -55,6 +55,7 @@ def dashboard(id):
         user = User.query.get_or_404(id)
         return render_template("dashboard.html", form=form, user=user)
 
+
 @app.route("/sign_up", methods=["GET", "POST"])
 def sign_up():
     form = SignUpForm()
@@ -77,9 +78,9 @@ def sign_up():
                 return redirect(url_for("login"))
             except:
                 flash("There was an error signing you up")
-                return redirect(url_for("sign_up"))
-            
+                return redirect(url_for("sign_up"))         
     return render_template("sign_up.html", form=form)
+
 
 @app.route("/search", methods=["POST"])
 def search():
@@ -166,6 +167,7 @@ def update_password(id):
                     return redirect(url_for("home"))
         return render_template("update_password.html", form=form, user=user)
 
+
 @app.route("/add_review/<int:gear_id>", methods=["GET", "POST"])
 @login_required
 def add_review(gear_id):
@@ -192,6 +194,7 @@ def add_review(gear_id):
             return redirect(url_for("about_gear", id=gear_item.id))
     return render_template("add_review.html", form=form, title=gear_item.name)
 
+
 @app.route("/edit_review/<int:id>", methods=["GET", "POST"])
 @login_required
 def edit_review(id):
@@ -213,6 +216,7 @@ def edit_review(id):
         form.rating.data = review.review_rating
         return render_template("edit_review.html", title=gear.name, form=form)
 
+
 @app.route("/delete_review/<int:id>")
 @login_required
 def delete_review(id):
@@ -225,6 +229,7 @@ def delete_review(id):
     except:
         flash("There seems to be a problem with deleting this post")
     return redirect(url_for("about_gear", id=gear.id))
+
 
 @app.route("/delete_gear/<int:id>")
 @login_required
@@ -243,6 +248,7 @@ def delete_gear(id):
         except:
             flash("There seems to be a problem with deleting this item")
             return redirect(url_for("home"), form=form)
+
 
 @app.route("/add_brand", methods=["GET", "POST"])
 @login_required

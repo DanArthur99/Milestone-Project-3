@@ -17,11 +17,10 @@
     {% for user in users %}
     <div class="card shadow col-1 mt-5 m-1 width-18rem ">
         <div class="card-body">
-            <a href="{{ url_for('dashboard', id=user.id) }}" class="text-white text-decoration-none">{{ user.username }}</a>
+            <a href="{{ url_for('dashboard', id=user.id) }}" class="text-decoration-none">{{ user.username }}</a>
         </div>
     </div>
     {% endfor %}
 </div>
-
 
 {% endblock %}

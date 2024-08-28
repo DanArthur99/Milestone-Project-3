@@ -17,7 +17,7 @@
     {% for review in user_reviews %}
     <div class="card m-3 shadow" style="width: 18rem;">
         <div class="card-body">
-            <h3 class="card-text"><a href="{{url_for('about_gear', gear_id=review.gear.id)}}">{{ review.gear.name.replace("-", " ").title() }}</a></h3>
+            <h3 class="card-text"><a href="{{url_for('about_gear', id=review.gear.id)}}">{{ review.gear.name.replace("-", " ").title() }}</a></h3>
             <p class="card-text">Review: {{ review.review_contents }}</p>
             <p class="card-text">Rating: {{ review.review_rating }} / 5</p>
             <p class="card-text">User: {{ review.user.username }}</p>
