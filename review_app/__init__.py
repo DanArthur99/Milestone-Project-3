@@ -23,4 +23,6 @@ else:
 
 db = SQLAlchemy(app)
 
+db.create_all()
+
 from review_app import routes
