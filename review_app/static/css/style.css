@@ -37,3 +37,9 @@ body {
 .button-width {
     width: 150px;
 }
+
+@media (max-width: 508px) {
+    .bungee-tin {
+        font-size: 50px;
+    }
+}
