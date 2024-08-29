@@ -42,4 +42,7 @@ body {
     .bungee-tin {
         font-size: 50px;
     }
+    .smaller-font {
+        font-size: 30px;
+    }
 }

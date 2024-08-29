@@ -137,6 +137,7 @@ The programming languages used for this project were:
 * [Flask](https://flask.palletsprojects.com/en/3.0.x/) - Python Framework
 * [Flask-Login](https://flask-login.readthedocs.io/en/latest/) - Used to provide session management
 * [Flask-WTF](https://flask-wtf.readthedocs.io/en/1.2.x/) - Integration of Flask and WTForms, used for Form validation
+* [bcrypt]
 * [Google Fonts](https://fonts.google.com/)- Imported selected fonts into external stylesheet, namely "Bungee Tunt", "Montserrat", and "New Amsterdam."
 * [Figma](https://www.figma.com/) - Used to create the wireframes.
 * [Coolors](https://coolors.co/) - Used to create the colour palette images.
@@ -147,28 +148,19 @@ The programming languages used for this project were:
 * [W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/) - Used for testing CSS validation.
 * [Wave Web Accessibility Evaluation Tool](https://wave.webaim.org/extension/) - Used for testing webpage accessibility. 
 
+### Schema
+
+
 ### Features
 
-#### HTML / CSS
-
-
-  ### Going Through The Code
-
-  #### JavaScript Features
-
-
-
   #### Potential Future Feautures
-
-
-### Accessibility
 
 
 ## Deployment & Local Development
 
 ### Deployment
 
-Github Pages was used to deploy the live website. The instructions to achieve this are below:
+Github Pages and Heroku was used to deploy the live website. The instructions to achieve this are below:
 
   1. Log in or Sign Up to Github.
   2. Find the repository for this project, DanArthur99 / Milestone-Project-2.Crazy-Eights-Game.
@@ -181,18 +173,18 @@ Github Pages was used to deploy the live website. The instructions to achieve th
 
 #### Forking a Repository
 
-To fork the Panic Switch Website repository:
+To fork the repository:
 
   1. Log in or Sign Up to Github.
-  2. Go to the repository for this project, DanArthur99 / Milestone-Project-2.Crazy-Eights-Game.
+  2. Go to the repository for this project, DanArthur99 / Milestone-Project-3.
   3. Click the Fork button in the top right corner.
 
 #### Cloning a Repository
 
-To clone the Panic Switch Website repository:
+To clone the repository:
 
   1. Log in or Sign Up to GitHub.
-  2. Go to the repository for this project, DanArthur99 / Milestone-Project-2.Crazy-Eights-Game.
+  2. Go to the repository for this project, DanArthur99 / Milestone-Project-3.
   3. Click on the code button, select whether you would like to clone with HTTPS, SSH or GitHub CLI and copy the link shown.
   4. Open the terminal in your IDE and set your working directory to the location you want to use for the cloned repository.
   5. Type 'git clone' into the terminal window, and paste the link from step 3, then press enter.
