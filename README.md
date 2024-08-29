@@ -1,4 +1,4 @@
-# Crazy Eights Online Game
+# Music Gear Review Site
 
 ![Review Site shown on various screens](docs/readme-images/responsive.png)
 
