@@ -153,7 +153,7 @@ The programming languages used for this project were:
 
 #### Entity Relationship Diagram
 
-[Entity Relationship Diagram](docs/readme-images/entity-relationship-diagram.png)
+![Entity Relationship Diagram](docs/readme-images/entity-relationship-diagram.png)
 
 ### Features
 
