@@ -1,6 +1,6 @@
 # Crazy Eights Online Game
 
-![Review Site shown on various screens](docs/readme-images/)
+![Review Site shown on various screens](docs/readme-images/responsive.png)
 
 Deployed Website: [Music Gear Review Site](https://gear-review-0801b9de8ec9.herokuapp.com/)
 
@@ -28,6 +28,7 @@ Deployed Website: [Music Gear Review Site](https://gear-review-0801b9de8ec9.hero
 * [Technologies Used](#Technologies-Used)
   * [Languages Used](#Languages-Used)
   * [Frameworks & Other Libraries/Programs Used](#Frameworks--Other-LibrariesPrograms-Used)
+  * [Database Schema](#Database-Schema)
 
 * [Deployment & Local Development](#Deployment--Local-Development)
   * [Deployment](#Deployment)
@@ -148,7 +149,7 @@ The programming languages used for this project were:
 * [W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/) - Used for testing CSS validation.
 * [Wave Web Accessibility Evaluation Tool](https://wave.webaim.org/extension/) - Used for testing webpage accessibility. 
 
-### Schema
+### Database Schema
 
 
 ### Features
