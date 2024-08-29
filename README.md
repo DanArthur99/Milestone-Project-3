@@ -42,13 +42,13 @@ Deployed Website: [Music Gear Review Site](https://gear-review-0801b9de8ec9.hero
   * [Code](#Code)
   * [Media](#Media)
 
-## Project Goal 
-
-The goal for this project was to create a simple review where users can select or add a music product to review. Users can create an account and see reviews of other users for different gear.
-
 ## Rationale
 
+### Project Goal 
 
+The goal for this project was to create a simple review site where users can select or add a music product to review. 
+Users can create an account and see reviews of other users for different gear.
+This site makes for a very convenient and quick way for users to review and see reviews for different music equipment they are interested to purchasin.
 
 ## User Experience (UX)
 
@@ -151,6 +151,9 @@ The programming languages used for this project were:
 
 ### Database Schema
 
+#### Entity Relationship Diagram
+
+[Entity Relationship Diagram](docs/readme-images/entity-relationship-diagram.png)
 
 ### Features
 
