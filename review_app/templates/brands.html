@@ -17,7 +17,7 @@
         <div class="card shadow col-3 m-1 bg-dark" style="width: 18rem;">
             <div class="card-body">
                 <a href="/brand_gear_list/{{ brand.id }}" class="text-white text-decoration-none">{{
-                    brand.brand_name.replace("-", " ").title() }}</a>
+                    brand.brand_name.replace("-", " ").upper() }}</a>
                 {% if current_user.admin %}
                 <a href="{{ url_for('edit_brand', id=brand.id) }}" class="btn btn-success col-12 m-1">Edit Brand</a>
                 <a href="{{ url_for('delete_brand', id=brand.id) }}" class="btn btn-danger col-12 m-1">Delete Brand</a>
