@@ -116,6 +116,16 @@ This site makes for a very convenient and quick way for users to review and see 
 
 #### Typography
 
+The Website primarily uses 3 different fonts throughout, obtained from Google Fonts. These fonts were:
+
+Bungee Tint ('sans-serif')
+Montserrat ('sans-serif')
+New Amsterdam ('sans-serif')
+
+"Bungee Tint" is used for the title page, as it is a very stylish looking font.
+
+"Montserrat" is used as the default font for the website text, and "New Amsterdam" is used for the titles of each page, as it is a much bolder looking font, while not being as overly stylistic as "Bungee Tint."
+
 #### Colour Palette
 
 ### Technologies Used
@@ -137,7 +147,7 @@ The programming languages used for this project were:
 * [Flask-Login](https://flask-login.readthedocs.io/en/latest/) - Used to provide session management
 * [Flask-WTF](https://flask-wtf.readthedocs.io/en/1.2.x/) - Integration of Flask and WTForms, used for Form validation
 * [bcrypt](https://pypi.org/project/bcrypt/)
-* [Google Fonts](https://fonts.google.com/)- Imported selected fonts into external stylesheet, namely "Bungee Tunt", "Montserrat", and "New Amsterdam."
+* [Google Fonts](https://fonts.google.com/)- Imported selected fonts into external stylesheet, namely "Bungee Tint", "Montserrat", and "New Amsterdam."
 * [Figma](https://www.figma.com/) - Used to create the wireframes.
 * [Coolors](https://coolors.co/) - Used to create the colour palette images.
 * [Favicon.io](https://favicon.io/) - To create favicon icons.
@@ -155,7 +165,13 @@ The programming languages used for this project were:
 
 ### Features
 
-  #### Potential Future Feautures
+* Upon entering the size, the user is greeted with the home page, which just welcomes the user.
+
+![Home Page](docs/)
+
+* The user has the option, to sign up, login, or search for a product by either filtering through, brands, categories, or search for a specific item using the search bar.
+
+#### Potential Future Feautures
 
 
 ## Deployment & Local Development
@@ -164,12 +180,8 @@ The programming languages used for this project were:
 
 Github Pages and Heroku was used to deploy the live website. The instructions to achieve this are below:
 
-  1. Log in or Sign Up to Github.
-  2. Find the repository for this project, DanArthur99 / Milestone-Project-2.Crazy-Eights-Game.
-  3. Click on the Settings link.
-  4. Click on the Pages link in the left hand side navigation bar.
-  5. In the Source section, choose main from the drop down select branch menu. Select Root from the drop down select   folder menu.
-  6. Click Save. Your live Github Pages site is now deployed at the URL shown.
+1. Login to Heroku
+
 
 ### Local Development
 
@@ -190,7 +202,9 @@ To clone the repository:
   3. Click on the code button, select whether you would like to clone with HTTPS, SSH or GitHub CLI and copy the link shown.
   4. Open the terminal in your IDE and set your working directory to the location you want to use for the cloned repository.
   5. Type 'git clone' into the terminal window, and paste the link from step 3, then press enter.
-  6. Your cloned repository should now be located in your chosen directory, ready for local development.
+  6. Your cloned repository should now be located in your chosen directory
+  7. Open your terminal window, and type in the following command, " pip install -r requirements.txt ". This will install all dependencies for this project onto your local machine
+  8. You are now ready ready for local development.
 
 
 ## Testing
