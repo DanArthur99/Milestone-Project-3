@@ -167,10 +167,21 @@ The programming languages used for this project were:
 
 * Upon entering the size, the user is greeted with the home page, which just welcomes the user.
 
-![Home Page](docs/)
+![Home Page](docs/readme-images/home-page.png)
 
 * The user has the option, to sign up, login, or search for a product by either filtering through, brands, categories, or search for a specific item using the search bar.
+* If the user hasn't already, they can sign up using the sign section. This stores, their username, email, and hashed password within the database
 
+![Sign Up](docs/readme-images/sign-up.png)
+
+* Once they sign up, they can then log in and access their own personal account.
+
+![Login](docs/readme-images//login-page.png)
+
+* Users can search for products and see reviews written by other users, and if they have an account they can write a review themselves
+
+![Search](docs/readme-images/search-results.png)
+![About Gear](docs/readme-images/product-reviews-list.png)
 #### Potential Future Feautures
 
 
