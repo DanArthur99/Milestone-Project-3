@@ -444,7 +444,7 @@ def user_reviews(id):
         flash("You are not authorized to access this page")
         return redirect(url_for("home"))
     else:
-        user_reviews = Review.query.filter_by(user_id=user.id)
+        user_reviews = Review.query.filter_by(user_id=user.id).all()
         if len(user_reviews) == 0:
                 user_reviews = None
         return render_template("user_reviews.html", user_reviews=user_reviews, form=form, user=user)
