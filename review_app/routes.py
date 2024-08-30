@@ -60,25 +60,25 @@ def dashboard(id):
 def sign_up():
     form = SignUpForm()
     if form.validate_on_submit():
-        password = bytes(form.password.data, "utf-8")
-        confirm_password = bytes(form.confirm_password.data, "utf-8")
-        if password != confirm_password:
-            flash("Passwords don't match")
-        else:
-            hashed_pw = bcrypt.hashpw(password, bcrypt.gensalt()) 
-            user = User(
-                username=form.username.data,
-                email=form.email.data,
-                password=hashed_pw.decode("utf-8")
-            )
-            try: 
+        try:
+            password = bytes(form.password.data, "utf-8")
+            confirm_password = bytes(form.confirm_password.data, "utf-8")
+            if password != confirm_password:
+                flash("Passwords don't match")
+            else:
+                hashed_pw = bcrypt.hashpw(password, bcrypt.gensalt()) 
+                user = User(
+                    username=form.username.data,
+                    email=form.email.data,
+                    password=hashed_pw.decode("utf-8")
+                )
                 db.session.add(user)
                 db.session.commit()
                 flash("Account created successfully")
                 return redirect(url_for("login"))
-            except:
-                flash("There was an error signing you up")
-                return redirect(url_for("sign_up"))         
+        except:
+            flash("There was an error signing you up")
+            return redirect(url_for("sign_up"))         
     return render_template("sign_up.html", form=form)
 
 
@@ -87,9 +87,13 @@ def search():
     form = SearchForm()
     gear_items = Gear.query
     if form.validate_on_submit():
-        gear_searched = form.searched.data
-        gear_items = gear_items.filter(Gear.name.ilike('%' + gear_searched + '%'))
-        gear_items = gear_items.order_by(Gear.name).all()
+        try:
+            gear_searched = form.searched.data
+            gear_items = gear_items.filter(Gear.name.ilike('%' + gear_searched + '%'))
+            gear_items = gear_items.order_by(Gear.name).all()
+        except:
+            flash("There was a problem when searching for a product")
+            return redirect(url_for("home"))
         return render_template("search.html", form=form, searched=gear_searched, gear_items=gear_items)
 
 @app.route("/search_users")
@@ -109,9 +113,13 @@ def list_of_users():
     form = SearchForm()
     users = User.query
     if form.validate_on_submit():
-        users_searched = form.searched.data
-        users = users.filter(User.username.ilike('%' + users_searched + '%'))
-        users = users.order_by(User.username).all()
+        try:
+            users_searched = form.searched.data
+            users = users.filter(User.username.ilike('%' + users_searched + '%'))
+            users = users.order_by(User.username).all()
+        except:
+            flash("Apologies, we seem to have encountered an error trying to search for a user")
+            return redirect(url_for("home"))
         return render_template("list_of_users.html", form=form, searched=users_searched, users=users)
 
 
@@ -125,14 +133,20 @@ def update_user(id):
         return redirect(url_for("home"))
     else:
         if form.validate_on_submit():
-            user.username = form.username.data
-            user.email = form.email.data
-            db.session.add(user)
-            db.session.commit()
-            if current_user.id == user.id:
-                flash("Your details have been updated")
-            else:
-                flash(f"{user.username}'s details have been updated")
+            try:
+                user.username = form.username.data
+                user.email = form.email.data
+                db.session.add(user)
+                db.session.commit()
+                if current_user.id == user.id:
+                    flash("Your details have been updated")
+                else:
+                    flash(f"{user.username}'s details have been updated")
+            except:
+                if current_user.id == user.id:
+                    flash("There was an error updating your details")
+                else:
+                    flash(f"There was an error updating {user.username}'s details")
             return redirect(url_for("dashboard", id=user.id))
         form.username.data = user.username
         form.email.data = user.email
@@ -182,15 +196,18 @@ def add_review(gear_id):
             flash("You have already written a review for this product")
             return redirect(url_for("about_gear", id=gear_item.id))
         else:
-            review = Review(
-                review_contents=form.review.data,
-                review_rating=form.rating.data,
-                user_id=current_user.id,
-                gear_id=gear_item.id
-            )
-            db.session.add(review)
-            db.session.commit()
-            flash("Thanks for your product review")
+            try:
+                review = Review(
+                    review_contents=form.review.data,
+                    review_rating=form.rating.data,
+                    user_id=current_user.id,
+                    gear_id=gear_item.id
+                )
+                db.session.add(review)
+                db.session.commit()
+                flash("Thanks for your product review")
+            except:
+                flash("There was an error adding this review")
             return redirect(url_for("about_gear", id=gear_item.id))
     return render_template("add_review.html", form=form, title=gear_item.name)
 
@@ -206,12 +223,15 @@ def edit_review(id):
         return redirect(url_for("home"))
     else:
         if form.validate_on_submit():
-            review.review_contents = form.review.data
-            review.review_rating = form.rating.data
-            db.session.add(review)
-            db.session.commit()
-            flash("Your review has been updated")
-            return redirect(url_for("about_gear", gear_id=gear.id))
+            try:
+                review.review_contents = form.review.data
+                review.review_rating = form.rating.data
+                db.session.add(review)
+                db.session.commit()
+                flash("Your review has been updated")
+            except:
+                flash("There was an error editing this review")
+            return redirect(url_for("about_gear", id=gear.id))
         form.review.data = review.review_contents
         form.rating.data = review.review_rating
         return render_template("edit_review.html", title=gear.name, form=form)
@@ -259,12 +279,15 @@ def add_brand():
         return redirect(url_for("brands"))
     else:
         if form.validate_on_submit():
-            brand = Brand(
-                brand_name = form.brand_name.data.replace(" ", "-").lower()
-            )
-            db.session.add(brand)
-            db.session.commit()
-            flash("This brand has been added")
+            try:
+                brand = Brand(
+                    brand_name = form.brand_name.data.replace(" ", "-").lower()
+                )
+                db.session.add(brand)
+                db.session.commit()
+                flash("This brand has been added")
+            except:
+                flash("There was an error adding this brand")
             return redirect(url_for("brands"))
         return render_template("add_brand.html", form=form)
 
@@ -277,12 +300,15 @@ def add_category():
         return redirect(url_for("categories"))
     else:
         if form.validate_on_submit():
-            category = Category(
-                category_name = form.category_name.data.replace(" ", "-").lower()
-            )
-            db.session.add(category)
-            db.session.commit()
-            flash("This category has been added")
+            try:
+                category = Category(
+                    category_name = form.category_name.data.replace(" ", "-").lower()
+                )   
+                db.session.add(category)
+                db.session.commit()
+                flash("This category has been added")
+            except:
+                flash("There was an error adding this category")
             return redirect(url_for("categories"))
         return render_template("add_category.html", form=form)
 
@@ -296,10 +322,13 @@ def edit_brand(id):
         return redirect(url_for("home"))
     else:
         if form.validate_on_submit():
-            brand.brand_name = form.brand_name.data.replace(" ", "-").lower()
-            db.session.add(brand)
-            db.session.commit()
-            flash("This brand has been updated")
+            try:     
+                brand.brand_name = form.brand_name.data.replace(" ", "-").lower()
+                db.session.add(brand)
+                db.session.commit()
+                flash("This brand has been updated")
+            except:
+                flash("There was an error updating this category")
             return redirect(url_for("brands"))
         form.brand_name.data = brand.brand_name.replace("-", " ").title()
         return render_template("edit_brand.html", form=form, title=brand.brand_name.replace("-", " ").title())
@@ -314,10 +343,13 @@ def edit_category(id):
         return redirect(url_for("categories"))
     else:
         if form.validate_on_submit():
-            category.category_name = form.brand_name.data.replace(" ", "-").lower()
-            db.session.add(category)
-            db.session.commit()
-            flash("This brand has been updated")
+            try:
+                category.category_name = form.brand_name.data.replace(" ", "-").lower()
+                db.session.add(category)
+                db.session.commit()
+                flash("This brand has been updated")
+            except:
+                flash("There was an error editing this category")
             return redirect(url_for("categories"))
         form.category_name.data = category.category_name.replace("-", " ").title()
         return render_template("edit_brand.html", form=form, title=category.category_name.replace("-", " ").title())
@@ -421,15 +453,19 @@ def user_reviews(id):
 def add_product():
     form = AddProductForm()
     if form.validate_on_submit():
-        product = Gear(
-            name=form.name.data.replace(" ", "-").lower(),
-            brand_id = form.brand.data,
-            category_id = form.category.data
-        )
-        db.session.add(product)
-        db.session.commit()
-        flash("Your product has been added")
-        return redirect(url_for("home"))
+        try:
+            product = Gear(
+                name=form.name.data.replace(" ", "-").lower(),
+                brand_id = form.brand.data,
+                category_id = form.category.data
+            )
+            db.session.add(product)
+            db.session.commit()
+            flash("Your product has been added")
+            return redirect(url_for("about_gear", id=product.id))
+        except:
+            flash("There was an error adding this product")
+            return redirect(url_for("home"))
     return render_template("add_product.html", form=form)
 
 

@@ -28,7 +28,11 @@ Deployed Website: [Music Gear Review Site](https://gear-review-0801b9de8ec9.hero
 * [Technologies Used](#Technologies-Used)
   * [Languages Used](#Languages-Used)
   * [Frameworks & Other Libraries/Programs Used](#Frameworks--Other-LibrariesPrograms-Used)
-  * [Database Schema](#Database-Schema)
+
+* [Features](#Features)
+
+* [Database Schema](#Database-Schema)
+  * [Entity Relationship Diagram](#Entity-Relationship-Diagram)
 
 * [Deployment & Local Development](#Deployment--Local-Development)
   * [Deployment](#Deployment)
@@ -128,6 +132,8 @@ New Amsterdam ('sans-serif')
 
 #### Colour Palette
 
+![Colour Palette](docs/readme-images/colour-palette.png)
+
 ### Technologies Used
 
 #### Languages Used
@@ -144,9 +150,9 @@ The programming languages used for this project were:
 * Github - To save and store changes to the project
 * [Bootstrap (v5.3.2)](https://getbootstrap.com/) - CSS and JS framework used. Used mainly for the navbar, grid structure, and button styling.
 * [Flask](https://flask.palletsprojects.com/en/3.0.x/) - Python Framework
-* [Flask-Login](https://flask-login.readthedocs.io/en/latest/) - Used to provide session management
-* [Flask-WTF](https://flask-wtf.readthedocs.io/en/1.2.x/) - Integration of Flask and WTForms, used for Form validation
-* [bcrypt](https://pypi.org/project/bcrypt/)
+* [Flask-Login](https://flask-login.readthedocs.io/en/latest/) - Used to provide session management.
+* [Flask-WTF](https://flask-wtf.readthedocs.io/en/1.2.x/) - Integration of Flask and WTForms, used for Form validation.
+* [bcrypt](https://pypi.org/project/bcrypt/) - Library used for password hashing.
 * [Google Fonts](https://fonts.google.com/)- Imported selected fonts into external stylesheet, namely "Bungee Tint", "Montserrat", and "New Amsterdam."
 * [Figma](https://www.figma.com/) - Used to create the wireframes.
 * [Coolors](https://coolors.co/) - Used to create the colour palette images.
@@ -157,13 +163,10 @@ The programming languages used for this project were:
 * [W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/) - Used for testing CSS validation.
 * [Wave Web Accessibility Evaluation Tool](https://wave.webaim.org/extension/) - Used for testing webpage accessibility. 
 
-### Database Schema
-
-#### Entity Relationship Diagram
-
-![Entity Relationship Diagram](docs/readme-images/entity-relationship-diagram.png)
 
 ### Features
+
+#### Main User Features
 
 * Upon entering the size, the user is greeted with the home page, which just welcomes the user.
 
@@ -178,11 +181,61 @@ The programming languages used for this project were:
 
 ![Login](docs/readme-images//login-page.png)
 
+* They now have access to their own account dashboard, which allows them to view and edit their username and email, as well as give them the option to change their password, or even delete their account
+
+![Dashboard](docs/readme-images/dashboard.png)
+
+* Users can also see all the reviews they have written inside it's own "Your Reviews" section.
+
+![User Reviews](docs/readme-images/your-reviews.png)
+
 * Users can search for products and see reviews written by other users, and if they have an account they can write a review themselves
 
 ![Search](docs/readme-images/search-results.png)
 ![About Gear](docs/readme-images/product-reviews-list.png)
+
+* Users are also able to update and delete their own reviews
+
+![Update Review](docs/readme-images/edit-review.png)
+![Delete Review](docs/readme-images/delete-review.png)
+
+* As well as the search bar, the user is also able to browse through the categories and brands in order to find the item they are looking for
+  * Brands:
+![Brands](docs/readme-images/brands.png)
+![Brands Gear List](docs/readme-images/brand-gear-list.png)
+  * Categories:
+![Categories](docs/readme-images/categories.png)
+![Category Gear List](docs/readme-images/category-gear-list.png)
+
+#### Validation
+
+##### Unathorized Access
+
+* Measures have been implemented so that users are always unable to access pages that they should. This could be, for example, a user being able to another user's dashboard, being able to edit and delete other people's reviews, or regular users access admin only pages and functions.
+
+* If a user ever manages to find themselves accessing the URL of a page they shouldn't, they will be immediately booted out and an error message will display.
+
+![Unauthorized](docs/readme-images/not-authorised.png)
+
+* A similar feature is implement should a user try to access an account functionality when not logged in. For example, a user cannot leave a review should they not be logged in, nor can they access any dashboards, as well as other features.
+
+![Login Required](docs/readme-images/login-required.png)
+
+*
+
+##### 
+
+#### Admin Only Features
+
 #### Potential Future Feautures
+
+#### Going Through the Code
+
+### Database Schema
+
+#### Entity Relationship Diagram
+
+![Entity Relationship Diagram](docs/readme-images/entity-relationship-diagram.png)
 
 
 ## Deployment & Local Development
