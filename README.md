@@ -42,9 +42,7 @@ Deployed Website: [Music Gear Review Site](https://gear-review-0801b9de8ec9.hero
   * [Code](#Code)
   * [Media](#Media)
 
-## Rationale
-
-### Project Goal 
+## Project Goal 
 
 The goal for this project was to create a simple review site where users can select or add a music product to review. 
 Users can create an account and see reviews of other users for different gear.
@@ -138,7 +136,7 @@ The programming languages used for this project were:
 * [Flask](https://flask.palletsprojects.com/en/3.0.x/) - Python Framework
 * [Flask-Login](https://flask-login.readthedocs.io/en/latest/) - Used to provide session management
 * [Flask-WTF](https://flask-wtf.readthedocs.io/en/1.2.x/) - Integration of Flask and WTForms, used for Form validation
-* [bcrypt]
+* [bcrypt](https://pypi.org/project/bcrypt/)
 * [Google Fonts](https://fonts.google.com/)- Imported selected fonts into external stylesheet, namely "Bungee Tunt", "Montserrat", and "New Amsterdam."
 * [Figma](https://www.figma.com/) - Used to create the wireframes.
 * [Coolors](https://coolors.co/) - Used to create the colour palette images.
