@@ -478,7 +478,7 @@ def about_gear(id):
     for review in reviews:
         gear_rating_total += float(review.review_rating)
     if len(reviews) > 0:
-        gear_rating_mean = gear_rating_total / len(reviews)
+        gear_rating_mean = round((gear_rating_total / len(reviews)), 1)
     else:
         gear_rating_mean = None
     return render_template("about_gear.html", form=form, title=gear_item.name, gear=gear_item, reviews=reviews, score=gear_rating_mean)
