@@ -167,7 +167,7 @@ The programming languages used for this project were:
 
 * Upon entering the size, the user is greeted with the home page, which just welcomes the user.
 
-![Home Page](docs/)
+![Home Page](docs/readme-images/home-page.png)
 
 * The user has the option, to sign up, login, or search for a product by either filtering through, brands, categories, or search for a specific item using the search bar.
 
