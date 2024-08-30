@@ -14,8 +14,8 @@
 </div>
 
 <div class="row justify-content-center">
-    {% if user_reviews %}
-    {% for review in user_reviews %}
+    {% if len(user_reviews) > 0 %}
+    {% for review in user_reviews %} 
     <div class="card m-3 shadow col-4" style="width: 18rem;">
         <div class="card-body">
             <h3 class="card-text"><a href="{{url_for('about_gear', id=review.gear.id)}}">{{ review.gear.name.replace("-", " ").title() }}</a></h3>
