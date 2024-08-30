@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for, flash
 from review_app import app, db, login_user, LoginManager, login_required, logout_user, current_user
 from review_app.models import User, Gear, Category, Brand, Review
-
+from review_app.forms import LoginForm, SignUpForm, AddReviewForm, SearchForm, AddProductForm, UpdateDetailsForm, NewPasswordForm, AddBrandForm, AddCategoryForm
 import bcrypt
 
 login_manager = LoginManager()
