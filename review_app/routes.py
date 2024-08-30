@@ -474,7 +474,11 @@ def about_gear(id):
     form = SearchForm()
     gear_item = Gear.query.get_or_404(id)
     reviews = Review.query.filter_by(gear_id=gear_item.id).all()
-    return render_template("about_gear.html", form=form, title=gear_item.name, gear=gear_item, reviews=reviews)
+    gear_rating_total = float(0)
+    for review in reviews:
+        gear_rating_total += float(review.review_rating)
+    gear_rating_mean = gear_rating_total / len(reviews)
+    return render_template("about_gear.html", form=form, title=gear_item.name, gear=gear_item, reviews=reviews, score=gear_rating_mean)
 
 
 @app.errorhandler(404)

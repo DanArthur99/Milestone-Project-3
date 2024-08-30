@@ -194,6 +194,10 @@ The programming languages used for this project were:
 ![Search](docs/readme-images/search-results.png)
 ![About Gear](docs/readme-images/product-reviews-list.png)
 
+* Users also have the option to add a new product to the system, which themselves and other users can write reviews on.
+
+![Add Product](docs/readme-images/add-product.png)
+
 * Users are also able to update and delete their own reviews
 
 ![Update Review](docs/readme-images/edit-review.png)
@@ -221,13 +225,35 @@ The programming languages used for this project were:
 
 ![Login Required](docs/readme-images/login-required.png)
 
-*
+* If the user trys to sign up using an existing email or username, then it was display a flash error message and reload the sign up page
+
+![Sign Up Error](docs/readme-images/sign-up-error.png)
+
+* Likewise, if the user tries to write a review for a product they have already reviewed, then it'll redirect the user and display a flash message.
+
+![Review Duplicate](docs/readme-images/review-duplicate-message.png)
 
 ##### 
 
 #### Admin Only Features
 
+* If a user is also an admin user, then they will have access to significantly more functonality. 
+* This includes, being able to add, edit and delete brands and categories from the database.
+
+![Admin Brands](docs/readme-images/admin-brands.png)
+![Admin Categories](docs/readme-images/admin-categories.png)
+
+* Admin users are also able to search through users and access their dashboards, close user accounts, and edit or delete any review
+
+![Search Users](docs/readme-images/search-users.png)
+
 #### Potential Future Feautures
+
+Some potential features that I would like to include include:
+
+* Admin users being able to change whether other users are admin or not
+* More interactivity, such as having a phyical star rating that they can select, rather than a drop down 0-5 menu
+* 
 
 #### Going Through the Code
 
