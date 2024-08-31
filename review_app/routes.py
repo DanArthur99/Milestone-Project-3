@@ -108,6 +108,7 @@ def sign_up():
 def search():
     """Queries the database using the entered string, and renders the results
     on screen."""
+    form = SearchForm()
     gear_items = Gear.query
     if form.validate_on_submit():
         try:
@@ -119,7 +120,7 @@ def search():
             flash("There was a problem when searching for a product")
             return redirect(url_for("home"))
         return render_template(
-            "search.html", searched=gear_searched,
+            "search.html", form_b=form, searched=gear_searched,
             gear_items=gear_items)
 
 
