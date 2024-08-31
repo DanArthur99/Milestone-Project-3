@@ -46,7 +46,6 @@ Deployed Website: [Music Gear Review Site](https://gear-review-0801b9de8ec9.hero
 * [Testing](#Testing)
   
 * [Credits](#Credits)
-  * [Code](#Code)
   * [Media](#Media)
 
 ## Project Goal 
