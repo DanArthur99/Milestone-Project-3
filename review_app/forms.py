@@ -58,7 +58,7 @@ class AddProductForm(FlaskForm):
         validators=[DataRequired()])
     category = SelectField(
         u"Select a Category",
-        choices=[
+        choices=[("", "---")]+[()
             (category.id, category.category_name.replace("-", " ").upper())
             for category in Category.query.order_by(Category.category_name)],
         validators=[DataRequired()])
