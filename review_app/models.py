@@ -1,5 +1,6 @@
 from review_app import db, UserMixin
 
+
 class User(db.Model, UserMixin):
     """User Model"""
     id = db.Column(db.Integer, primary_key=True)

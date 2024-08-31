@@ -1,4 +1,5 @@
 from flask import render_template, request, redirect, url_for, flash
+from sqlalchemy.exc import IntegrityError
 from review_app import app, db, login_user, LoginManager, login_required, logout_user, current_user
 from review_app.models import User, Gear, Category, Brand, Review
 from review_app.forms import LoginForm, SignUpForm, AddReviewForm, SearchForm, AddProductForm, UpdateDetailsForm, NewPasswordForm, AddBrandForm, AddCategoryForm
@@ -39,7 +40,7 @@ def login():
                     flash("Password not recognised")
             else:
                 flash("User not recognised")
-        except:
+        except IntegrityError:
             flash("There was an error logging on")
     return render_template("login.html", form=form)
 
@@ -88,7 +89,7 @@ def sign_up():
                 db.session.commit()
                 flash("Account created successfully")
                 return redirect(url_for("login"))
-        except:
+        except IntegrityError:
             flash("There was an error signing you up")
             return redirect(url_for("sign_up"))         
     return render_template("sign_up.html", form=form)
@@ -104,7 +105,7 @@ def search():
             gear_searched = form.searched.data
             gear_items = gear_items.filter(Gear.name.ilike('%' + gear_searched + '%'))
             gear_items = gear_items.order_by(Gear.name).all()
-        except:
+        except IntegrityError:
             flash("There was a problem when searching for a product")
             return redirect(url_for("home"))
         return render_template("search.html", form=form, searched=gear_searched, gear_items=gear_items)
@@ -132,7 +133,7 @@ def list_of_users():
             users_searched = form.searched.data
             users = users.filter(User.username.ilike('%' + users_searched + '%'))
             users = users.order_by(User.username).all()
-        except:
+        except IntegrityError:
             flash("Apologies, we seem to have encountered an error trying to search for a user")
             return redirect(url_for("home"))
         return render_template("list_of_users.html", form=form, searched=users_searched, users=users)
@@ -158,7 +159,7 @@ def update_user(id):
                     flash("Your details have been updated")
                 else:
                     flash(f"{user.username}'s details have been updated")
-            except:
+            except IntegrityError:
                 if current_user.id == user.id:
                     flash("There was an error updating your details")
                 else:
@@ -193,7 +194,7 @@ def update_password(id):
                     db.session.commit()
                     flash("Password updated")
                     return redirect(url_for("home"))
-                except:            
+                except IntegrityError:            
                     flash("There was an error updating your password")
                     return redirect(url_for("home"))
         return render_template("update_password.html", form=form, user=user)
@@ -224,7 +225,7 @@ def add_review(gear_id):
                 db.session.add(review)
                 db.session.commit()
                 flash("Thanks for your product review")
-            except:
+            except IntegrityError:
                 flash("There was an error adding this review")
             return redirect(url_for("about_gear", id=gear_item.id))
     return render_template("add_review.html", form=form, title=gear_item.name)
@@ -248,7 +249,7 @@ def edit_review(id):
                 db.session.add(review)
                 db.session.commit()
                 flash("Your review has been updated")
-            except:
+            except IntegrityError:
                 flash("There was an error editing this review")
             return redirect(url_for("about_gear", id=gear.id))
         form.review.data = review.review_contents
@@ -270,7 +271,7 @@ def delete_review(id):
             db.session.delete(review)
             db.session.commit()
             flash("Review successfully deleted")       
-        except:
+        except IntegrityError:
             flash("There seems to be a problem with deleting this post")
         return redirect(url_for("about_gear", id=gear.id))
 
@@ -290,7 +291,7 @@ def delete_gear(id):
             db.session.commit()
             flash("Gear successfully deleted")
             return redirect(url_for("home", form=form))
-        except:
+        except IntegrityError:
             flash("There seems to be a problem with deleting this item")
             return redirect(url_for("home"), form=form)
 
@@ -312,7 +313,7 @@ def add_brand():
                 db.session.add(brand)
                 db.session.commit()
                 flash("This brand has been added")
-            except:
+            except IntegrityError:
                 flash("There was an error adding this brand")
             return redirect(url_for("brands"))
         return render_template("add_brand.html", form=form)
@@ -335,7 +336,7 @@ def add_category():
                 db.session.add(category)
                 db.session.commit()
                 flash("This category has been added")
-            except:
+            except IntegrityError:
                 flash("There was an error adding this category")
             return redirect(url_for("categories"))
         return render_template("add_category.html", form=form)
@@ -357,7 +358,7 @@ def edit_brand(id):
                 db.session.add(brand)
                 db.session.commit()
                 flash("This brand has been updated")
-            except:
+            except IntegrityError:
                 flash("There was an error updating this category")
             return redirect(url_for("brands"))
         form.brand_name.data = brand.brand_name.replace("-", " ").title()
@@ -380,7 +381,7 @@ def edit_category(id):
                 db.session.add(category)
                 db.session.commit()
                 flash("This brand has been updated")
-            except:
+            except IntegrityError:
                 flash("There was an error editing this category")
             return redirect(url_for("categories"))
         form.category_name.data = category.category_name.replace("-", " ").title()
@@ -402,7 +403,7 @@ def delete_brand(id):
             db.session.commit()
             flash("Brand successfully deleted")
             return redirect(url_for("brands"))
-        except:
+        except IntegrityError:
             flash("There seems to be a problem with deleting this brand")
             return redirect(url_for("brands"))
     
@@ -422,7 +423,7 @@ def delete_category(id):
             db.session.commit()
             flash("Category successfully deleted")
             return redirect(url_for("categories"))
-        except:
+        except IntegrityError:
             flash("There seems to be a problem with deleting this category")
             return redirect(url_for("categories"))
 
@@ -443,7 +444,7 @@ def delete_user(id):
             db.session.commit()
             flash("User successfully deleted")
             return redirect(url_for("home", form=form))
-        except:
+        except IntegrityError:
             flash("There seems to be a problem with deleting this item")
             return redirect(url_for("home"), form=form)
 
@@ -514,7 +515,7 @@ def add_product():
             db.session.commit()
             flash("Your product has been added")
             return redirect(url_for("about_gear", id=product.id))
-        except:
+        except IntegrityError:
             flash("There was an error adding this product")
             return redirect(url_for("home"))
     return render_template("add_product.html", form=form)
