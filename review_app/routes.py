@@ -115,7 +115,7 @@ def search_buffer():
             return(url_for("home"))
         return(url_for("search", searched=searched))
 
-@app.route("/search/<searched>", methods=["POST"])
+@app.route("/search/<searched>", methods=["GET", "POST"])
 def search(searched):
     """Queries the database using the entered string, and renders the results
     on screen."""
