@@ -1,39 +1,43 @@
 {% extends "base.html" %}
 {% block content %}
 
-
-{% if current_user.id == user.id or not current_user.admin %}
-<div class="row justify-content-center">
-    <h1 class="m-3 col-4 text-center heading-font">Your Reviews</h1>
-</div>
-{% else %}
-<div class="row justify-content-center">
-    <h1 class="m-3 col-4 text-center">{{ user.username }}'s reviews</h1>
-</div>
-{% endif %}
-
-<div class="row justify-content-center">
-    {% if user_reviews %}
-    {% for review in user_reviews %}
-    <div class="card m-3 shadow col-4" style="width: 18rem;">
-        <div class="card-body">
-            <h3 class="card-text"><a href="{{url_for('about_gear', id=review.gear.id)}}">{{
-                    review.gear.name.replace("-", " ").title() }}</a></h3>
-            <p class="card-text">Review: {{ review.review_contents }}</p>
-            <p class="card-text">Rating: {{ review.review_rating }} / 5</p>
-            <p class="card-text">User: {{ review.user.username }}</p>
-            {% if current_user.id == review.user_id or current_user.admin == True %}
-            <a href="{{ url_for('edit_review', id=review.id) }}" class="btn btn-success m-1">Edit Review</a>
-            <a href="{{ url_for('delete_review', id=review.id) }}" class="btn btn-danger m-1">Delete Review</a>
-            {% endif %}
+<section id="user-reviews">
+    <header>
+        {% if current_user.id == user.id or not current_user.admin %}
+        <div class="row justify-content-center">
+            <h1 class="m-3 col-4 text-center heading-font">Your Reviews</h1>
         </div>
+        {% else %}
+        <div class="row justify-content-center">
+            <h1 class="m-3 col-4 text-center">{{ user.username }}'s reviews</h1>
+        </div>
+        {% endif %}
+    </header>
+
+    <div class="row justify-content-center">
+        {% if user_reviews %}
+        {% for review in user_reviews %}
+        <div class="card m-3 shadow col-4 width-18rem">
+            <div class="card-body">
+                <h3 class="card-text"><a href="{{url_for('about_gear', id=review.gear.id)}}">{{
+                        review.gear.name.replace("-", " ").title() }}</a></h3>
+                <p class="card-text">Review: {{ review.review_contents }}</p>
+                <p class="card-text">Rating: {{ review.review_rating }} / 5</p>
+                <p class="card-text">User: {{ review.user.username }}</p>
+                {% if current_user.id == review.user_id or current_user.admin == True %}
+                <a href="{{ url_for('edit_review', id=review.id) }}" class="btn btn-success m-1">Edit Review</a>
+                <a href="{{ url_for('delete_review', id=review.id) }}" class="btn btn-danger m-1">Delete Review</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="col-12 text-center">
+            <p>Looks like you haven't written any reviews yet</p>
+        </div>
+        {% endif %}
     </div>
-    {% endfor %}
-    {% else %}
-    <div class="col-12 text-center">
-        <p>Looks like you haven't written any reviews yet</p>
-    </div>
-    {% endif %}
-</div>
+</section>
+
 
 {% endblock %}

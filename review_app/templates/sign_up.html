@@ -1,44 +1,42 @@
 {% extends "base.html" %}
 {% block content %}
 
-
-<div class="row justify-content-center">
-    <header class="col-12 text-center mt-5">
-        <h1 class="heading-font">Sign Up</h1>
-    </header>
-</div>
-
-
-<div class="row justify-content-center">
-    <form class="col-md-6 mt-5" action="{{ url_for('sign_up') }}" method="POST">
-        {{ form.hidden_tag() }}
-
-        {{ form.username.label(class="form-label") }}
-        {{ form.username(class="form-control") }}
-
-        <br>
-
-        {{ form.email.label(class="form-label") }}
-        {{ form.email(class="form-control") }}
-
-        <br>
-
-        {{ form.password.label(class="form-label") }}
-        {{ form.password(class="form-control") }}
-
-        <br>
-
-        {{ form.confirm_password.label(class="form-label") }}
-        {{ form.confirm_password(class="form-control") }}
-
-        <br>
-
-        {{ form.submit(class="btn btn-secondary") }}
-
-    </form>
-</div>
+<section id="sign-up">
+    <div class="row justify-content-center">
+        <header class="col-12 text-center mt-5">
+            <h1 class="heading-font">Sign Up</h1>
+        </header>
+    </div>
 
 
+    <div class="row justify-content-center">
+        <form class="col-md-6 mt-5" action="{{ url_for('sign_up') }}" method="POST">
+            {{ form.hidden_tag() }}
 
+            {{ form.username.label(class="form-label") }}
+            {{ form.username(class="form-control") }}
+
+            <br>
+
+            {{ form.email.label(class="form-label") }}
+            {{ form.email(class="form-control") }}
+
+            <br>
+
+            {{ form.password.label(class="form-label") }}
+            {{ form.password(class="form-control") }}
+
+            <br>
+
+            {{ form.confirm_password.label(class="form-label") }}
+            {{ form.confirm_password(class="form-control") }}
+
+            <br>
+
+            {{ form.submit(class="btn btn-secondary") }}
+
+        </form>
+    </div>
+</section>
 
 {% endblock %}

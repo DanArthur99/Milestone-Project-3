@@ -2,25 +2,31 @@
 {% block content %}
 
 
-<div class="row justify-content-center">
-    <header class="col-12 text-center mt-5">
-        <h1 class="heading-font">Gear made by {{ title }}...</h1>
-    </header>
-</div>
-<div class="row justify-content-center">
-    <p class="m-3 col-12 text-center">Can't see what you're looking for?<span><a href="{{ url_for('add_product') }}">Add
-                a new Product here</a></span></p>
-</div>
-<div class="row justify-content-center">
-    {% for gear_item in gear %}
-    <div class="card shadow m-1 col-3 bg-dark width-18rem">
-        <div class="card-body">
-            <a href="/about_gear/{{ gear_item.id }}" class="text-white text-decoration-none">{{
-                gear_item.name.replace("-", " ").title() }}</a>
-        </div>
+<section id="brand-gear-list">
+    <div class="row justify-content-center">
+        <header class="col-12 text-center mt-5">
+            <h1 class="heading-font">Gear made by {{ title }}...</h1>
+        </header>
     </div>
-    {% endfor %}
-</div>
+
+    <div class="row justify-content-center">
+        <p class="m-3 col-12 text-center">Can't see what you're looking for?<span><a
+                    href="{{ url_for('add_product') }}">Add
+                    a new Product here</a></span></p>
+    </div>
+
+    <div class="row justify-content-center">
+        {% for gear_item in gear %}
+        <div class="card shadow m-1 col-3 bg-dark width-18rem">
+            <div class="card-body">
+                <a href="/about_gear/{{ gear_item.id }}" class="text-white text-decoration-none">{{
+                    gear_item.name.replace("-", " ").title() }}</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
 
 
 {% endblock %}
