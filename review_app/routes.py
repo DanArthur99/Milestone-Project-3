@@ -64,6 +64,7 @@ def logout():
 @app.route("/dashboard/<int:id>", methods=["GET", "POST"])
 @login_required
 def dashboard(id):
+    form = SearchForm()
     """Checks to see if the user authorized to access the page, and if true,
     renders the dashboard page."""
     if not current_user.admin and current_user.id != id:
@@ -72,7 +73,7 @@ def dashboard(id):
     else:
         form = SearchForm()
         user = User.query.get_or_404(id)
-        return render_template("dashboard.html", form=form, user=user)
+        return render_template("dashboard.html", form_b=form, user=user)
 
 
 @app.route("/sign_up", methods=["GET", "POST"])
