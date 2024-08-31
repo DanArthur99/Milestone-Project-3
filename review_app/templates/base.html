@@ -20,81 +20,79 @@
 </head>
 
 <body class="bg-success-subtle">
-    <header>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-                <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span><i class="fa-solid fa-bars"></i></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">Home</a>
-                        </li>
-                        {% if current_user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
-                        </li>
-                        {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('sign_up') }}">Sign Up</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('login') }}">Login</a>
-                        </li>
-                        {% endif %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('categories') }}">Categories</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('brands') }}">Brands</a>
-                        </li>
-                        {% if current_user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="/dashboard/{{ current_user.id }}">Dashboard</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/user_reviews/{{ current_user.id }}">Your Reviews</a>
-                        </li>
-                        {% endif %}
-                        {% if current_user.admin %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('search_users') }}">Search Users</a>
-                        </li>
-                        {% endif %}
-                    </ul>
-                    <form method="POST" action="{{ url_for('search') }}" class="d-flex" role="search">
-                        {{ form.hidden_tag() }}
-                        <input class="form-control me-2" type="search" id="search_bar"
-                            placeholder="Search for a product" aria-label="Search" name="searched" required>
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
+    <div class="container-fluid g-0">
+        <header>
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+                    <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span><i class="fa-solid fa-bars"></i></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">Home</a>
+                            </li>
+                            {% if current_user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                            </li>
+                            {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('sign_up') }}">Sign Up</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                            </li>
+                            {% endif %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('categories') }}">Categories</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('brands') }}">Brands</a>
+                            </li>
+                            {% if current_user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="/dashboard/{{ current_user.id }}">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/user_reviews/{{ current_user.id }}">Your Reviews</a>
+                            </li>
+                            {% endif %}
+                            {% if current_user.admin %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('search_users') }}">Search Users</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                        <form method="POST" action="{{ url_for('search') }}" class="d-flex" role="search">
+                            {{ form.hidden_tag() }}
+                            <input class="form-control me-2" type="search" id="search_bar"
+                                placeholder="Search for a product" aria-label="Search" name="searched" required>
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+                    </div>
                 </div>
+            </nav>
+        </header>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+
+        {% for message in messages %}
+        <div class="row justify-content-center mt-5">
+            <div class="alert alert-warning col-4 ms-4" role="alert">
+                {{ message }}
             </div>
-        </nav>
-    </header>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-
-    {% for message in messages %}
-    <div class="row justify-content-center mt-5">
-        <div class="alert alert-warning col-4 ms-4" role="alert">
-            {{ message }}
         </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {% block content %}
+
+        {% endblock %}
     </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
-
-    {% block content %}
-
-    {% endblock %}
-
-    <footer class="row">
-        <div class="col-12 footer-section"></div>
-    </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
