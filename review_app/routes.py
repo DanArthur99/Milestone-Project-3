@@ -510,7 +510,8 @@ def brand_gear_list(brand_id):
     form = SearchForm()
     gear = Gear.query.filter_by(brand_id=brand.id).all()
     return render_template(
-        "brand_gear_list.html", gear=gear, form=form, title=brand.brand_name)
+        "brand_gear_list.html", gear=gear, form=form, 
+        title=brand.brand_name.replace("-", " "))
 
 
 @app.route("/category_gear_list/<int:category_id>", methods=["GET", "POST"])
@@ -522,7 +523,7 @@ def category_gear_list(category_id):
     gear = Gear.query.filter_by(category_id=category.id).all()
     return render_template(
         "category_gear_list.html", gear=gear, form=form,
-        title=category.category_name)
+        title=category.category_name.replace("-", " "))
 
 
 @app.route("/user_reviews/<int:id>", methods=["GET", "POST"])

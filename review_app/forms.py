@@ -47,13 +47,13 @@ class AddProductForm(FlaskForm):
     brand = SelectField(
         u"Select a Brand",
         choices=[
-            (brand.id, brand.brand_name.upper())
+            (brand.id, brand.brand_name.replace("-", " ").upper())
             for brand in Brand.query.order_by(Brand.brand_name)],
         validators=[DataRequired()])
     category = SelectField(
         u"Select a Category",
         choices=[
-            (category.id, category.category_name.upper())
+            (category.id, category.category_name.replace("-", " ").upper())
             for category in Category.query.order_by(Category.category_name)],
         validators=[DataRequired()])
     submit = SubmitField("Submit")
