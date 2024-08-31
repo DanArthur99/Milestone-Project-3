@@ -42,6 +42,12 @@ body {
     width: 150px;
 }
 
+.footer-section {
+    width: 100%;
+    height: 40px;
+    background-color: gray;
+}
+
 @media (max-width: 508px) {
     .bungee-tin {
         font-size: 50px;

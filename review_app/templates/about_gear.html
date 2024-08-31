@@ -27,6 +27,7 @@
 
 {% endif %}
 
+<!-- ====== Dynamically Displayed Reviews for the selected product ========== -->
 <div class="row justify-content-center">
     {% for review in reviews %}
     <div class="card m-5 col-4 shadow width-20rem">
@@ -43,6 +44,7 @@
     {% endfor %}
 </div>
 
+<!-- ========= Delete Product Modal ========== -->
 <div class="modal" id="gear-deletion-check" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">>
     <div class="modal-dialog">
         <div class="modal-content">
