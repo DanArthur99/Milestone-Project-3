@@ -27,7 +27,9 @@ class AddReviewForm(FlaskForm):
         "Enter your review", widget=TextArea(), validators=[DataRequired()])
     rating = SelectField(
         u"Rating out of 5",
-        choices=[(0, "0"), (1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5")],
+        choices=[(
+            "", "---")]+[
+                (0, "0"), (1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5")],
         validators=[DataRequired()])
     submit = SubmitField("Submit")
 
@@ -58,7 +60,7 @@ class AddProductForm(FlaskForm):
         validators=[DataRequired()])
     category = SelectField(
         u"Select a Category",
-        choices=[
+        choices=[("", "---")]+[
             (category.id, category.category_name.replace("-", " ").upper())
             for category in Category.query.order_by(Category.category_name)],
         validators=[DataRequired()])
