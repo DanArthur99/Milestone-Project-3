@@ -30,6 +30,9 @@ Deployed Website: [Music Gear Review Site](https://gear-review-0801b9de8ec9.hero
   * [Frameworks & Other Libraries/Programs Used](#Frameworks--Other-LibrariesPrograms-Used)
 
 * [Features](#Features)
+  * [Main User Features](#main-user-features)
+  * [Validation](#validation)
+  * [Admin Only Features](#admin-only-features)
 
 * [Database Schema](#Database-Schema)
   * [Entity Relationship Diagram](#Entity-Relationship-Diagram)
@@ -192,7 +195,7 @@ The programming languages used for this project were:
 * Users can search for products and see reviews written by other users, and if they have an account they can write a review themselves
 
 ![Search](docs/readme-images/search-results.png)
-![About Gear](docs/readme-images/product-reviews-list.png)
+![About Gear](docs/readme-images/about-gear.png)
 
 * Users also have the option to add a new product to the system, which themselves and other users can write reviews on.
 
@@ -212,8 +215,6 @@ The programming languages used for this project were:
 ![Category Gear List](docs/readme-images/category-gear-list.png)
 
 #### Validation
-
-##### Unathorized Access
 
 * Measures have been implemented so that users are always unable to access pages that they should. This could be, for example, a user being able to another user's dashboard, being able to edit and delete other people's reviews, or regular users access admin only pages and functions.
 
@@ -246,6 +247,7 @@ The programming languages used for this project were:
 * Admin users are also able to search through users and access their dashboards, close user accounts, and edit or delete any review
 
 ![Search Users](docs/readme-images/search-users.png)
+![User Dashboard](docs/readme-images/dashboard-admin.png)
 
 #### Potential Future Feautures
 
@@ -253,9 +255,6 @@ Some potential features that I would like to include include:
 
 * Admin users being able to change whether other users are admin or not
 * More interactivity, such as having a phyical star rating that they can select, rather than a drop down 0-5 menu
-* 
-
-#### Going Through the Code
 
 ### Database Schema
 
@@ -263,6 +262,46 @@ Some potential features that I would like to include include:
 
 ![Entity Relationship Diagram](docs/readme-images/entity-relationship-diagram.png)
 
+#### Tables and Relationships
+
+Below are the tables and relationaships between the 5 tables in the database, as also reflected in the ERD above.
+
+##### User
+
+* id - Primary Key
+* email 
+* password 
+* username
+* reviews - one-to-many relationship with review table
+* admin 
+
+##### Gear
+
+* id - Primary Key
+* name
+* brand_id - Foreign Key - many-to-one relationship with brand table
+* category_id - Foriegn Key - many-to-one relationship with category table
+* reviews - one-to-many relationship with review table
+
+##### Brand
+
+* id - Primary Key
+* brand_name 
+* gear - one-to-many relationship with gear table
+
+##### Category
+
+* id - Primary Key
+* category_name 
+* gear - one-to-many relationship with gear table
+
+##### Review
+
+* id - Primary Key
+* review_contents
+* review_rating
+* user_id - Foreign Key - many-to-one relationship with user table
+* gear_id - Foreign Key - many-to-one relationship with gear table
 
 ## Deployment & Local Development
 
@@ -271,7 +310,17 @@ Some potential features that I would like to include include:
 Github Pages and Heroku was used to deploy the live website. The instructions to achieve this are below:
 
 1. Login to Heroku
-
+2. Click "New", then "Create New App"
+3. Enter a name for the app and choose your region.
+4. Click "Create App"
+5. Ensure your Github account is linked to your Heroku account.
+6. On "Deployment Method" select "Github"
+7. Search for and select your desired repository.
+8. Choose "Settings", and click "Reveal Config Vars"
+9. Here you can add your environment variables, including your IP, PORT, SECRET_KEY, and DATABASE_URL
+10. Try not to include a DEBUG varible here, or if you do, make sure it is set to False
+11. Go to "Deploy", and if you want, you can select "Enable Automatic Deploys", and make sure the branch is set to "main"
+12. Go down to "Manual Deploy", select "main" branch, and click "Deploy Branch". Your project is now deployed.
 
 ### Local Development
 
@@ -294,17 +343,20 @@ To clone the repository:
   5. Type 'git clone' into the terminal window, and paste the link from step 3, then press enter.
   6. Your cloned repository should now be located in your chosen directory
   7. Open your terminal window, and type in the following command, " pip install -r requirements.txt ". This will install all dependencies for this project onto your local machine
-  8. You are now ready ready for local development.
-
+  8. Create an env.py file that contains your IP, PORT, SECRET_KEY, DB_URL, DEBUG, DEVELOPMENT variables.
+  9. You are now ready ready for local development.
 
 ## Testing
 
+[Testing](TESTING.md)
+
 ## Credits
 
-### Code
+### Media
 
+* [Create a Flask Blog - Flask Friday](https://www.youtube.com/watch?v=0Qxtt4veJIc&list=PLCC34OHNcOtolz2Vd9ZSeSXWc8Bq23yEz&pp=iAQB) - author: Codemy.com
+  * This series of videos provided a great insight and help while developing this project, particularly when it came to the use of WTForms and Flask-Login.
 
-### Other References 
 
 
 
