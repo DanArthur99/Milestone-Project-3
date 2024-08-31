@@ -32,6 +32,7 @@ def login():
     """Checks if the user with the entered email exists, and if true,
     then the password is checked using bcrypt."""
     form = LoginForm()
+    form_b = SearchForm()
     if form.validate_on_submit():
         try:
             entered_password = bytes(form.password.data, "utf-8")
@@ -48,7 +49,7 @@ def login():
                 flash("User not recognised")
         except IntegrityError:
             flash("There was an error logging on")
-    return render_template("login.html", form=form)
+    return render_template("login.html", form=form, form_b=form_b)
 
 
 @app.route("/logout", methods=["GET", "POST"])
@@ -79,6 +80,7 @@ def sign_up():
     """Hashes the password adds it to the database alongside the entered
     username and email."""
     form = SignUpForm()
+    form_b = SearchForm()
     if form.validate_on_submit():
         try:
             password = bytes(form.password.data, "utf-8")
@@ -99,7 +101,7 @@ def sign_up():
         except IntegrityError:
             flash("There was an error signing you up")
             return redirect(url_for("sign_up"))
-    return render_template("sign_up.html", form=form)
+    return render_template("sign_up.html", form=form, form_b=form_b)
 
 
 @app.route("/search", methods=["POST"])
@@ -118,7 +120,7 @@ def search():
             flash("There was a problem when searching for a product")
             return redirect(url_for("home"))
         return render_template(
-            "search.html", form=form, searched=gear_searched,
+            "search.html", form_b=form, searched=gear_searched,
             gear_items=gear_items)
 
 
@@ -127,13 +129,13 @@ def search():
 def search_users():
     """Checks if the user is admin, and if true, the page is rendered with all
     users displayed on screen."""
+    form = SearchForm()
     if not current_user.admin:
         flash("You are not authorized to access this page")
         return redirect(url_for("home"))
     else:
-        form = SearchForm()
         users = User.query
-        return render_template("search_users.html", form=form, users=users)
+        return render_template("search_users.html", form=form, form_b=form, users=users)
 
 
 @app.route("/list_of_users", methods=["POST"])
@@ -142,6 +144,7 @@ def list_of_users():
     """Queries the database using the entered string, and renders the results
     on screen."""
     form = SearchForm()
+    form_b = SearchForm()
     users = User.query
     if form.validate_on_submit():
         try:
@@ -154,8 +157,8 @@ def list_of_users():
                 "Apologies, we seem to have encountered an error")
             return redirect(url_for("home"))
         return render_template(
-            "list_of_users.html", form=form, searched=users_searched,
-            users=users)
+            "list_of_users.html", form=form, form_b=form_b,
+            searched=users_searched, users=users)
 
 
 @app.route("/update_user/<int:id>", methods=["GET", "POST"])
@@ -164,6 +167,7 @@ def update_user(id):
     """Checks if the user is authorized, and if true,
     updates the queried user's details on submit."""
     form = UpdateDetailsForm()
+    form_b = SearchForm()
     user = User.query.get_or_404(id)
     if not current_user.admin and current_user.id != id:
         flash("You are not authorized to access this page")
@@ -188,7 +192,8 @@ def update_user(id):
             return redirect(url_for("dashboard", id=user.id))
         form.username.data = user.username
         form.email.data = user.email
-        return render_template("update_user.html", form=form, user=user)
+        return render_template(
+            "update_user.html", form=form, form_b=form_b, user=user)
 
 
 @app.route("/update_password/<int:id>", methods=["GET", "POST"])
@@ -196,6 +201,7 @@ def update_user(id):
 def update_password(id):
     """Checks if the user is authorized, and if true,
     the user's password is updated."""
+    form_b = SearchForm()
     if not current_user.admin and current_user.id != id:
         flash("You are not authorized to access this page")
         return redirect(url_for("home"))
@@ -218,7 +224,8 @@ def update_password(id):
                 except IntegrityError:
                     flash("There was an error updating your password")
                     return redirect(url_for("home"))
-        return render_template("update_password.html", form=form, user=user)
+        return render_template(
+            "update_password.html", form=form, form_b=form_b, user=user)
 
 
 @app.route("/add_review/<int:gear_id>", methods=["GET", "POST"])
@@ -232,6 +239,7 @@ def add_review(gear_id):
     for review in reviews:
         review_user_ids.add(review.user_id)
     form = AddReviewForm()
+    form_b = SearchForm()
     if form.validate_on_submit():
         if current_user.id in review_user_ids:
             flash("You have already written a review for this product")
@@ -250,7 +258,8 @@ def add_review(gear_id):
             except IntegrityError:
                 flash("There was an error adding this review")
             return redirect(url_for("about_gear", id=gear_item.id))
-    return render_template("add_review.html", form=form, title=gear_item.name)
+    return render_template(
+        "add_review.html", form=form, form_b=form_b, title=gear_item.name)
 
 
 @app.route("/edit_review/<int:id>", methods=["GET", "POST"])
@@ -260,6 +269,7 @@ def edit_review(id):
     allows the review to be changed by the user."""
     review = Review.query.get_or_404(id)
     form = AddReviewForm()
+    form_b = SearchForm()
     gear = Gear.query.get_or_404(review.gear.id)
     if not current_user.admin and current_user.id != review.user.id:
         flash("You are not authorized to access this page")
@@ -277,7 +287,8 @@ def edit_review(id):
             return redirect(url_for("about_gear", id=gear.id))
         form.review.data = review.review_contents
         form.rating.data = review.review_rating
-        return render_template("edit_review.html", title=gear.name, form=form)
+        return render_template(
+            "edit_review.html", title=gear.name, form=form, form_b=form_b)
 
 
 @app.route("/delete_review/<int:id>")
@@ -305,20 +316,19 @@ def delete_review(id):
 def delete_gear(id):
     """Checks if the user is admin, and if true,
     the product is deleted from the database."""
-    form = SearchForm()
     if not current_user.admin:
         flash("You are not authorized for this functionality")
-        return redirect(url_for("home", form=form))
+        return redirect(url_for("home"))
     else:
         gear = Gear.query.get_or_404(id)
         try:
             db.session.delete(gear)
             db.session.commit()
             flash("Gear successfully deleted")
-            return redirect(url_for("home", form=form))
+            return redirect(url_for("home"))
         except IntegrityError:
             flash("There seems to be a problem with deleting this item")
-            return redirect(url_for("home"), form=form)
+            return redirect(url_for("home"))
 
 
 @app.route("/add_brand", methods=["GET", "POST"])
@@ -327,6 +337,7 @@ def add_brand():
     """Checks if the user is admin, and if true,
     adds a new brand to the database."""
     form = AddBrandForm()
+    form_b = SearchForm()
     if not current_user.admin:
         flash("You are not authorized to access this page")
         return redirect(url_for("brands"))
@@ -334,7 +345,8 @@ def add_brand():
         if form.validate_on_submit():
             try:
                 brand = Brand(
-                    brand_name=form.brand_name.data.replace(" ", "-").lower()
+                    brand_name=form.brand_name.data.replace(
+                        " ", "-").lower()
                 )
                 db.session.add(brand)
                 db.session.commit()
@@ -342,7 +354,8 @@ def add_brand():
             except IntegrityError:
                 flash("There was an error adding this brand")
             return redirect(url_for("brands"))
-        return render_template("add_brand.html", form=form)
+        return render_template(
+            "add_brand.html", form=form, form_b=form_b)
 
 
 @app.route("/add_category", methods=["GET", "POST"])
@@ -351,6 +364,7 @@ def add_category():
     """Checks if the user is admin, and if true,
     adds a new category to the database."""
     form = AddCategoryForm()
+    form_b = SearchForm()
     if not current_user.admin:
         flash("You are not authorized to access this page")
         return redirect(url_for("categories"))
@@ -367,7 +381,7 @@ def add_category():
             except IntegrityError:
                 flash("There was an error adding this category")
             return redirect(url_for("categories"))
-        return render_template("add_category.html", form=form)
+        return render_template("add_category.html", form=form, form_b=form_b)
 
 
 @app.route("/edit_brand/<int:id>", methods=["GET", "POST"])
@@ -376,6 +390,7 @@ def edit_brand(id):
     """Checks if the user is admin, and if true, updates the brand name."""
     brand = Brand.query.get_or_404(id)
     form = AddBrandForm()
+    form_b = SearchForm()
     if not current_user.admin:
         flash("You are not authorized to access this page")
         return redirect(url_for("home"))
@@ -392,7 +407,8 @@ def edit_brand(id):
             return redirect(url_for("brands"))
         form.brand_name.data = brand.brand_name.replace("-", " ").title()
         return render_template(
-            "edit_brand.html", form=form, title=brand.brand_name.replace(
+            "edit_brand.html", form=form, form_b=form_b, 
+            title=brand.brand_name.replace(
                 "-", " ").title())
 
 
@@ -402,6 +418,7 @@ def edit_category(id):
     """Checks if the user is admim, and if true, updates the category name."""
     category = Category.query.get_or_404(id)
     form = AddCategoryForm()
+    form_b = SearchForm()
     if not current_user.admin:
         flash("You are not authorized to access this page")
         return redirect(url_for("categories"))
@@ -419,7 +436,8 @@ def edit_category(id):
         form.category_name.data = category.category_name.replace(
             "-", " ").title()
         return render_template(
-            "edit_brand.html", form=form, title=category.category_name.replace(
+            "edit_brand.html", form=form, 
+            form_b=form_b, title=category.category_name.replace(
                 "-", " ").title())
 
 
@@ -449,7 +467,6 @@ def delete_brand(id):
 def delete_category(id):
     """Checks if the user is admin, and if true,
     deletes the category along with all relations, from the database."""
-    form = SearchForm()
     if not current_user.admin:
         flash("You are not authorized for this functionality")
         return redirect(url_for("categories"))
@@ -469,21 +486,20 @@ def delete_category(id):
 @login_required
 def delete_user(id):
     """Checks if the current user is admin, and if true, the selected."""
-    form = SearchForm()
     user = User.query.get_or_404(id)
     if not current_user.admin and current_user != user.id:
         flash("You are not authorized for this functionality")
-        return redirect(url_for("home", form=form))
+        return redirect(url_for("home"))
     else:
         user = User.query.get_or_404(id)
         try:
             db.session.delete(user)
             db.session.commit()
             flash("User successfully deleted")
-            return redirect(url_for("home", form=form))
+            return redirect(url_for("home"))
         except IntegrityError:
             flash("There seems to be a problem with deleting this item")
-            return redirect(url_for("home"), form=form)
+            return redirect(url_for("home"))
 
 
 @app.route("/categories")
@@ -491,7 +507,7 @@ def categories():
     """Renders all categories from the database onto the screen."""
     form = SearchForm()
     categories = Category.query.order_by(Category.category_name).all()
-    return render_template("categories.html", categories=categories, form=form)
+    return render_template("categories.html", categories=categories, form_b=form)
 
 
 @app.route("/brands")
@@ -499,7 +515,7 @@ def brands():
     """Renders all brands from the database onto the screen"""
     form = SearchForm()
     brands = Brand.query.order_by(Brand.brand_name).all()
-    return render_template("brands.html", brands=brands, form=form)
+    return render_template("brands.html", brands=brands, form_b=form)
 
 
 @app.route("/brand_gear_list/<int:brand_id>")
@@ -510,7 +526,7 @@ def brand_gear_list(brand_id):
     form = SearchForm()
     gear = Gear.query.filter_by(brand_id=brand.id).all()
     return render_template(
-        "brand_gear_list.html", gear=gear, form=form, 
+        "brand_gear_list.html", gear=gear, form_b=form,
         title=brand.brand_name.replace("-", " "))
 
 
@@ -522,7 +538,7 @@ def category_gear_list(category_id):
     form = SearchForm()
     gear = Gear.query.filter_by(category_id=category.id).all()
     return render_template(
-        "category_gear_list.html", gear=gear, form=form,
+        "category_gear_list.html", gear=gear, form_b=form,
         title=category.category_name.replace("-", " "))
 
 
@@ -541,7 +557,7 @@ def user_reviews(id):
         if len(user_reviews) == 0:
             user_reviews = None
         return render_template(
-            "user_reviews.html", user_reviews=user_reviews, form=form,
+            "user_reviews.html", user_reviews=user_reviews, form_b=form,
             user=user)
 
 
@@ -550,6 +566,7 @@ def user_reviews(id):
 def add_product():
     """Adds new product to the database from the user's form inputs"""
     form = AddProductForm()
+    form_b = SearchForm()
     if form.validate_on_submit():
         try:
             product = Gear(
@@ -564,7 +581,7 @@ def add_product():
         except IntegrityError:
             flash("There was an error adding this product")
             return redirect(url_for("home"))
-    return render_template("add_product.html", form=form)
+    return render_template("add_product.html", form=form, form_b=form_b)
 
 
 @app.route("/about_gear/<int:id>")
@@ -582,7 +599,7 @@ def about_gear(id):
     else:
         gear_rating_mean = None
     return render_template(
-        "about_gear.html", form=form, title=gear_item.name, gear=gear_item,
+        "about_gear.html", form_b=form, title=gear_item.name, gear=gear_item,
         reviews=reviews, score=gear_rating_mean)
 
 

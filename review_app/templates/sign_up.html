@@ -8,36 +8,36 @@
     </header>
 </div>
 
-<section id="signup">
-    <div class="row justify-content-center">
-        <form class="col-md-6 mt-5" action="{{ url_for('sign_up') }}" method="POST">
-            {{ form.hidden_tag() }}
 
-            {{ form.username.label(class="form-label") }}
-            {{ form.username(class="form-control") }}
+<div class="row justify-content-center">
+    <form class="col-md-6 mt-5" action="{{ url_for('sign_up') }}" method="POST">
+        {{ form.hidden_tag() }}
 
-            <br>
+        {{ form.username.label(class="form-label") }}
+        {{ form.username(class="form-control") }}
 
-            {{ form.email.label(class="form-label") }}
-            {{ form.email(class="form-control") }}
+        <br>
 
-            <br>
+        {{ form.email.label(class="form-label") }}
+        {{ form.email(class="form-control") }}
 
-            {{ form.password.label(class="form-label") }}
-            {{ form.password(class="form-control") }}
+        <br>
 
-            <br>
+        {{ form.password.label(class="form-label") }}
+        {{ form.password(class="form-control") }}
 
-            {{ form.confirm_password.label(class="form-label") }}
-            {{ form.confirm_password(class="form-control") }}
+        <br>
 
-            <br>
+        {{ form.confirm_password.label(class="form-label") }}
+        {{ form.confirm_password(class="form-control") }}
 
-            {{ form.submit(class="btn btn-secondary") }}
+        <br>
 
-        </form>
-    </div>
-</section>
+        {{ form.submit(class="btn btn-secondary") }}
+
+    </form>
+</div>
+
 
 
 

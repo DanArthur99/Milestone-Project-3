@@ -5,12 +5,14 @@ from review_app.models import Brand, Category
 
 
 class LoginForm(FlaskForm):
+    """Login Form Object"""
     email = EmailField("Email", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired()])
     submit = SubmitField("Submit")
 
 
 class SignUpForm(FlaskForm):
+    """Sign Up Form Object"""
     username = StringField("Username", validators=[DataRequired()])
     email = EmailField("Email", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired()])
@@ -20,6 +22,7 @@ class SignUpForm(FlaskForm):
 
 
 class AddReviewForm(FlaskForm):
+    """Review Form Object"""
     review = StringField(
         "Enter your review", widget=TextArea(), validators=[DataRequired()])
     rating = SelectField(
@@ -30,18 +33,21 @@ class AddReviewForm(FlaskForm):
 
 
 class AddBrandForm(FlaskForm):
+    """Brand Form Object"""
     brand_name = StringField(
         "Enter Brand Name", widget=TextArea(), validators=[DataRequired()])
     submit = SubmitField("Submit")
 
 
 class AddCategoryForm(FlaskForm):
+    """Category Form Object"""
     category_name = StringField(
         "Enter Category Name", widget=TextArea(), validators=[DataRequired()])
     submit = SubmitField("Submit")
 
 
 class AddProductForm(FlaskForm):
+    """Product Form Object"""
     name = StringField(
         "Enter the name of the product", validators=[DataRequired()])
     brand = SelectField(
@@ -60,17 +66,20 @@ class AddProductForm(FlaskForm):
 
 
 class SearchForm(FlaskForm):
+    """Search Form Object"""
     searched = StringField("Searched", validators=[DataRequired()])
     submit = SubmitField("Submit")
 
 
 class UpdateDetailsForm(FlaskForm):
+    """User Details Form Object"""
     username = StringField("Username", validators=[DataRequired()])
     email = EmailField("Email", validators=[DataRequired()])
     submit = SubmitField("Submit")
 
 
 class NewPasswordForm(FlaskForm):
+    """Update Password Form Object"""
     password = PasswordField("Password", validators=[DataRequired()])
     confirm_password = PasswordField(
         "Confirm Password", validators=[DataRequired()])

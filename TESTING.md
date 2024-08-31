@@ -3,8 +3,6 @@
 ## CONTENTS
 * [Manual Testing](#Manual-Testing)
   * [Full Testing](#Full-Testing)
-    * [Home Page Testing](#Home-Page-Testing)
-    * [Game Page Testing](#Game-Page-Testing)
 * [W3C Validator](#W3C-Validator)
 * [Lighthouse Testing](#Lighthouse-Testing)
 * [Wave Accessibiliy Testing](#Wave-Accessibility-TSesting)
@@ -78,117 +76,53 @@ Draw Card empty shuffledPile AND empty discardPile test|In the rare occurrence t
 Loads correctly|If the page url is unrecognized or non existantthen the 404 page should load in its place|Typed in random characters after the base URL|404 Page loads correctly|Pass
 Home button test|Should take the user back to the Home page when click|Click Go Back Home Button|Home Page Loads|Pass
 
-## Unit testing 
+## Python Linter
 
-* Unit testing was performed on the script.js file.
-* This was to test the functionality of specific functions within the file, specifically if they manipulate and the parameters in the correct way.
-* The functions tested included the resetAll, dealHand, several game state setters and game state checker, as well as others.
-* The results of this can be seen below:
+### __init.py
 
-![Unit Testing Results Image 1](docs/testing/unit-testing-results.png)
-![Unit Testing Results Image 1](docs/testing/unit-testing-results-2.png)
+![Init.py Linter](docs/readme-images/init-linter.png)
 
-* As you can, 32 different unit test were performed, with all 32 passing. 
+### run.py
 
+![Run.py Linter](docs/readme-images/linter-pass.png)
+
+### forms.py
+
+![Forms.py Linter](docs/readme-images/linter-pass.png)
+
+### model.py
+
+![Model.py Linter](docs/readme-images/linter-pass.png)
+
+### routes.py
+
+![Routes.py Linter](docs/readme-images/linter-pass.png)
 
 ## W3C Validator
 
-### Home Page
+# Home Page
 
-![Home Page W3C Validator](docs/testing/index-page-w3c-validation.png)
+# Login Page
 
-### Game Page
+# Sign Up Page
 
-![Game Page W3C Validator](docs/testing/game-page-w3c-validation.png)
+# Brands Page
 
-### 404 Page
+# Categories Page
 
-![404 Page W3C Validator](docs/testing/404-page-w3c-validation.png)
+# Search Page
 
-### Stylesheets
+# Add Product Page
 
-#### Main Stylesheet
+# Dashboard
 
-![Stylesheet W3C Validator](docs/testing/stylesheet-w3c-validation.png)
+### Stylesheet Validator
 
-#### Title Page Only Stylesheet
-
-![Title Page Stylesheet W3C Validator](docs/testing/title-page-stylesheet-w3c-validation.png)
-
-## Lighthouse Testing
-
-### Home Page
-
-#### Desktop
-
-![Home Page Desktop Lighthouse Test](docs/testing/index-page-lighthouse-test-desktop.png)
-
-#### Mobile
-
-![Home Page Mobile Lighthouse Test](docs/testing/index-page-lighthouse-test-mobile.png)
-
-### Game Page
-
-#### Desktop
-
-![Game Page Desktop Lighthouse Test](docs/testing/game-page-lighthouse-test-desktop.png)
-
-#### Mobile
-
-![Game Page Mobile Lighthouse Test](docs/testing/game-page-lighthouse-test-mobile.png)
-
-### 404 Page
-
-#### Desktop
-
-![404 Page Lighthouse Test](docs/testing/404-page-lighthouse-test-desktop.png)
-
-#### Mobile
-
-![404 Page Lighthouse Test](docs/testing/404-page-lighthouse-test-mobile.png)
+![W3C-Stylesheet](docs/readme-images/w3c-stylesheet.png)
 
 ## Wave Accessibility Testing
 
 ### Home Page
-
-![Home Page Wave Test Summary](docs/testing/index-page-wave-accessibility-summary.png)
-
-![Home Page Wave Test Details](docs/testing/index-page-wave-accessibility-details.png)
-
-### Game Page
-
-![Game Page Wave Test Summary](docs/testing/game-page-wave-accessibility-summary.png)
-
-![Game Page Wave Test Details](docs/testing/game-page-wave-accessibility-details.png)
-
-* There is 1 alert appearing here about No Page Regions. This is due to the lack of header, section, and footer elemenets. However as divs are constantly appearing and disappearing due to the game functionaility and the responsiveness, there isn't as obvious a set structure or order on this HTML page.
-
-### 404 Page
-
-![404 Page Wave Test](docs/testing/404-page-wave-accessibility-summary.png)
-
-![404 Page Wave Test](docs/testing/404-page-wave-accessibility-details.png)
-
-## JS Hint Report
-
-![JS Hint Report](docs/testing/js-hint-report.png)
-
-* The only alerts I am getting are that async funtions are only available with ES8.
-
-## Bugs
-
-### Solved Bugs
-
-* One bug I initially encountered was that functions would call multiple times rather than the intented once. This was causing duplicated data and player hands to not match with the action taken by the player. The reason this was happen is because each new player function was called inside of the previous using a setTimout, cause a recursion. By only having the the computer player's turns being called within each other. Once it's the player's turn, the the displayHand function is called, which re-enable all the event listeners, and the computer player's turn is only called once the certain event is triggered, whereas before the player's turn was its own function that was called within the last computer player turn function.
-
-* One bug I found was that the discard Pile was not push it's entire contents into the shuffled Pile, stopping at around halfway. The reason this was happening is before with each iteration of the for loop, the discardPile.length was actually getting smaller. So say if the length was 8, and I wanted to iterate through it 8 time, as I was decreasing the length each time, the upper limit of the loop was also decreasing. This fixed by setting the value to a fixed variable before starting to loop, then iterating through the loop that number times. This way I could decrease the discardPile.length without change the upper limit of the for loop.
-
-![Array Upper Limit Bug Fix](docs/testing/array-upper-limit-bug-fix.png)
-
-* Another bug I came across was when a user would click a card in large screen mode, them shift the display from from large screen to mobile view, the game would still allow the user to click on the cards activating the "Play Card?" modal. This would then add add the previous card they clicked in large screen mode, causing potential confusion for players. To fix this whenever the user would click a card in large view mode, this would then remove the data-bs-toggle attribute from the clickable cards in the mobile view hand. The attributes would then be re-added on if the user were to click "no".
-
-![Mobile View Error Fix](docs/testing/mobile-view-error-fix.png)
-![Mobile View Error Fix Attribute Attachment](docs/testing/mobile-view-error-fix-attr-attachment.png)
 
 ## Testing User Stories
 
