@@ -607,11 +607,11 @@ def about_gear(id):
 def not_found_error(e):
     """Handles 404 error"""
     form = SearchForm()
-    return render_template("404.html", form=form), 404
+    return render_template("404.html", form_b=form), 404
 
 
 @app.errorhandler(500)
 def not_found_error(e):
     """Handles 500 error"""
     form = SearchForm()
-    return render_template("500.html", form=form), 500
+    return render_template("500.html", form_b=form), 500
