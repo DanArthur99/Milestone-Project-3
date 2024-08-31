@@ -6,6 +6,10 @@ body {
     width: 18rem;
 }
 
+.width-20rem {
+    width: 20rem;
+}
+
 .center-align {
     top: 50%;
     transform: translateY(50%)
