@@ -71,7 +71,7 @@
                             {% endif %}
                         </ul>
                         <form method="POST" action="{{ url_for('search') }}" class="d-flex" role="search">
-                            {{ form_b.hidden_tag(id=csrf_token_2) }}
+                            {{ form_b.hidden_tag(id="csrf_token_2") }}
                             <input class="form-control me-2" type="search" id="search_bar"
                                 placeholder="Search for a product" aria-label="Search" name="searched" required>
                             <button class="btn btn-outline-success" type="submit">Search</button>
