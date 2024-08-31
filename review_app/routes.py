@@ -24,7 +24,7 @@ def load_user(user_id):
 def home():
     """Function for the home page"""
     form = SearchForm()
-    return render_template("home.html", form=form)
+    return render_template("home.html", form_b=form)
 
 
 @app.route("/login", methods=["GET", "POST"])
