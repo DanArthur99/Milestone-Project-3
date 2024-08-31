@@ -70,7 +70,7 @@
                             </li>
                             {% endif %}
                         </ul>
-                        <form method="POST" action="{{ url_for('search') }}" class="d-flex" role="search">
+                        <form method="POST" action="{{ url_for('search_buffer') }}" class="d-flex" role="search">
                             {{ form_b.hidden_tag() }}
                             <input class="form-control me-2" type="search" id="search_bar"
                                 placeholder="Search for a product" aria-label="Search" name="searched" required>

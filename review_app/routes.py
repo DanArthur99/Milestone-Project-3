@@ -104,25 +104,34 @@ def sign_up():
             return redirect(url_for("sign_up"))
     return render_template("sign_up.html", form=form, form_b=form_b)
 
+@app.route("/search_buffer", methods=["GET", "POST"])
+def search_buffer():
+    form = SearchForm()
+    if form.validate_on_submit():
+        try:
+            searched = form.searched.data
+        except IntegrityError:
+            flash("sorry, we are having difficulties")
+            return(url_for("home"))
+        return(url_for("search", searched=searched))
 
-@app.route("/search", methods=["POST"])
-def search():
+@app.route("/search/<searched>", methods=["POST"])
+def search(searched):
     """Queries the database using the entered string, and renders the results
     on screen."""
     form = SearchForm()
     gear_items = Gear.query
-    if form.validate_on_submit():
-        try:
-            gear_searched = form.searched.data
-            gear_items = gear_items.filter(
-                Gear.name.ilike('%' + gear_searched + '%'))
-            gear_items = gear_items.order_by(Gear.name).all()
-        except IntegrityError:
-            flash("There was a problem when searching for a product")
-            return redirect(url_for("home"))
-        return render_template(
-            "search.html", form_b=form, searched=gear_searched,
-            gear_items=gear_items)
+    try:
+        gear_searched = searched
+        gear_items = gear_items.filter(
+            Gear.name.ilike('%' + gear_searched + '%'))
+        gear_items = gear_items.order_by(Gear.name).all()
+    except IntegrityError:
+        flash("There was a problem when searching for a product")
+        return redirect(url_for("home"))
+    return render_template(
+        "search.html", form_b=form, searched=gear_searched,
+        gear_items=gear_items)
 
 
 @app.route("/search_users")

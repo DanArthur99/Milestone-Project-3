@@ -102,15 +102,27 @@ Home button test|Should take the user back to the Home page when click|Click Go 
 
 # Home Page
 
+![Home]
+
 # Login Page
+
+![W3C Home Page](docs/readme-images/home-page-html-validation.png)
 
 # Sign Up Page
 
+![W3C Sign Up](docs/readme-images/w3c-html-sign-up.png)
+
 # Brands Page
+
+![W3C Brands](docs/readme-images/w3c-brands-page.png)
 
 # Categories Page
 
+![W3C Categories](docs/readme-images/w3c-html-categories.png)
+
 # Search Page
+
+![W3C Search](docs/readme-images/w3c)
 
 # Add Product Page
 
