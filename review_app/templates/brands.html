@@ -14,7 +14,7 @@
     {% endif %}
     <div class="row mt-1 mb-5 justify-content-center">
         {% for brand in brands %}
-        <div class="card shadow col-3 m-1 bg-dark" style="width: 18rem;">
+        <div class="card shadow col-3 m-1 bg-dark width-18rem">
             <div class="card-body">
                 <a href="/brand_gear_list/{{ brand.id }}" class="text-white text-decoration-none">{{
                     brand.brand_name.replace("-", " ").upper() }}</a>

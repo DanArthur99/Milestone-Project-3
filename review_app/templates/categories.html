@@ -14,7 +14,7 @@
     {% endif %}
     <div class="row m-1 justify-content-center">
         {% for category in categories %}
-        <div class="card shadow col-3 m-1 bg-dark" style="width: 18rem;">
+        <div class="card shadow col-3 m-1 bg-dark width-18rem">
             <div class="card-body">
                 <a href="/category_gear_list/{{ category.id }}" class="text-white text-decoration-none">{{
                     category.category_name.replace("-", " ").upper() }}</a>
