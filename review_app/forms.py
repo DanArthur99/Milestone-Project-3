@@ -52,13 +52,13 @@ class AddProductForm(FlaskForm):
         "Enter the name of the product", validators=[DataRequired()])
     brand = SelectField(
         u"Select a Brand",
-        choices=[
+        choices=[("", "---")]+[
             (brand.id, brand.brand_name.replace("-", " ").upper())
             for brand in Brand.query.order_by(Brand.brand_name)],
         validators=[DataRequired()])
     category = SelectField(
         u"Select a Category",
-        choices=[("", "---")]+[()
+        choices=[
             (category.id, category.category_name.replace("-", " ").upper())
             for category in Category.query.order_by(Category.category_name)],
         validators=[DataRequired()])
@@ -79,7 +79,7 @@ class UpdateDetailsForm(FlaskForm):
 
 
 class NewPasswordForm(FlaskForm):
-    """Update Password Form Object"""
+    """Update Password Form"""
     password = PasswordField("Password", validators=[DataRequired()])
     confirm_password = PasswordField(
         "Confirm Password", validators=[DataRequired()])
