@@ -112,8 +112,8 @@ def search_buffer():
             searched = form.searched.data
         except IntegrityError:
             flash("sorry, we are having difficulties")
-            return(url_for("home"))
-        return(url_for("search", searched=searched))
+            return redirect(url_for("home"))
+        return redirect(url_for("search", searched=searched))
 
 @app.route("/search/<searched>", methods=["GET", "POST"])
 def search(searched):
