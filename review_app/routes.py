@@ -8,6 +8,7 @@ from review_app.models import User, Gear, Category, Brand, Review
 from review_app.forms import (
     LoginForm, SignUpForm, AddReviewForm, SearchForm, AddProductForm,
     UpdateDetailsForm, NewPasswordForm, AddBrandForm, AddCategoryForm)
+from psycopg2.errors import UniqueViolation
 import bcrypt
 
 login_manager = LoginManager()
@@ -104,6 +105,7 @@ def sign_up():
             return redirect(url_for("sign_up"))
     return render_template("sign_up.html", form=form, form_b=form_b)
 
+
 @app.route("/search_buffer", methods=["GET", "POST"])
 def search_buffer():
     form = SearchForm()
@@ -114,6 +116,9 @@ def search_buffer():
             flash("sorry, we are having difficulties")
             return redirect(url_for("home"))
         return redirect(url_for("search", searched=searched))
+    else:
+        return redirect(url_for("home"))
+
 
 @app.route("/search/<searched>", methods=["GET", "POST"])
 def search(searched):
@@ -193,7 +198,7 @@ def update_user(id):
                     flash("Your details have been updated")
                 else:
                     flash(f"{user.username}'s details have been updated")
-            except IntegrityError:
+            except UniqueViolation:
                 if current_user.id == user.id:
                     flash("There was an error updating your details")
                 else:
