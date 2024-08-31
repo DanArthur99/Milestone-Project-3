@@ -1,36 +1,37 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="container">
-    <div class="row justify-content-center">
-        <header class="col-12 text-center mt-5">
-            {% if current_user.id == user.id %}
-            <h1 class="heading-font">Update Your Details</h1>
-            {% else %}
-            <h1 class="heading-font">Update Details for {{ user.username }}</h1>
-            {% endif %}
-        </header>
-    </div>
-    <section id="update_user">
-        <div class="row justify-content-center">
-            <form class="col-md-6 mt-5" action="{{ url_for('update_user', id=user.id) }}" method="POST">
-                {{ form.hidden_tag() }}
-        
-                {{ form.username.label(class="form-label") }}
-                {{ form.username(class="form-control") }}
-        
-                <br>
-        
-                {{ form.email.label(class="form-label") }}
-                {{ form.email(class="form-control") }}
-        
-                <br>
-        
-                {{ form.submit(class="btn btn-secondary") }}
-        
-            </form> 
-        </div>
-    </section>
+
+<div class="row justify-content-center">
+    <header class="col-12 text-center mt-5">
+        {% if current_user.id == user.id %}
+        <h1 class="heading-font">Update Your Details</h1>
+        {% else %}
+        <h1 class="heading-font">Update Details for {{ user.username }}</h1>
+        {% endif %}
+    </header>
 </div>
+
+<section id="update_user">
+    <div class="row justify-content-center">
+        <form class="col-md-6 mt-5" action="{{ url_for('update_user', id=user.id) }}" method="POST">
+            {{ form.hidden_tag() }}
+
+            {{ form.username.label(class="form-label") }}
+            {{ form.username(class="form-control") }}
+
+            <br>
+
+            {{ form.email.label(class="form-label") }}
+            {{ form.email(class="form-control") }}
+
+            <br>
+
+            {{ form.submit(class="btn btn-secondary") }}
+
+        </form>
+    </div>
+</section>
+
 
 {% endblock %}

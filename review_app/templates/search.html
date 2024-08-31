@@ -1,23 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="container">
-    <div class="row justify-content-center">
-        <h2 class="m-3 col-4 text-center mt-5 heading-font">Search results for {{ searched }}...</h2>
-    </div>
-    <div class="row justify-content-center">
-        <p class="m-3 col-12 text-center">Can't see what you're looking for?<span><a href="{{ url_for('add_product') }}">Add a new Product
-            here</a></span></p>
-    </div>
-    <div class="row justify-content-center">
-        {% for gear in gear_items %}
-        <div class="card shadow m-1 col-3 bg-dark width-18rem">
-            <div class="card-body">
-                <a href="/about_gear/{{ gear.id }}" class="text-white text-decoration-none">{{ gear.name.replace("-", " ").title() }}</a>
-            </div>
+<div class="row justify-content-center">
+    <h2 class="m-3 col-4 text-center mt-5 heading-font">Search results for {{ searched }}...</h2>
+</div>
+
+<div class="row justify-content-center">
+    <p class="m-3 col-12 text-center">Can't see what you're looking for?<span><a href="{{ url_for('add_product') }}">Add
+                a new Product
+                here</a></span></p>
+</div>
+
+<div class="row justify-content-center">
+    {% for gear in gear_items %}
+    <div class="card shadow m-1 col-3 bg-dark width-18rem">
+        <div class="card-body">
+            <a href="/about_gear/{{ gear.id }}" class="text-white text-decoration-none">{{ gear.name.replace("-", "
+                ").title() }}</a>
         </div>
-        {% endfor %}
     </div>
+    {% endfor %}
 </div>
 
 {% endblock %}

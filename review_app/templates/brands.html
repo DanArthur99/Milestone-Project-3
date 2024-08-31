@@ -1,31 +1,31 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="container">
-    <div class="row justify-content-center">
-        <header class="col-4 text-center m-3">
-            <h1 class="heading-font">Brands</h1>
-        </header>
-    </div>
-    {% if current_user.admin %}
-    <div class="row justify-content-center">
-        <a href="{{ url_for('add_brand') }}" class="m-3 col-2 text-center btn btn-secondary">Add a new brand</a>
-    </div>
-    {% endif %}
-    <div class="row mt-1 mb-5 justify-content-center">
-        {% for brand in brands %}
-        <div class="card shadow col-3 m-1 bg-dark width-18rem">
-            <div class="card-body">
-                <a href="/brand_gear_list/{{ brand.id }}" class="text-white text-decoration-none">{{
-                    brand.brand_name.replace("-", " ").upper() }}</a>
-                {% if current_user.admin %}
-                <a href="{{ url_for('edit_brand', id=brand.id) }}" class="btn btn-success col-12 m-1">Edit Brand</a>
-                <a href="{{ url_for('delete_brand', id=brand.id) }}" class="btn btn-danger col-12 m-1">Delete Brand</a>
-                {% endif %}
-            </div>
-        </div>
-        {% endfor %}
-    </div>
+
+<div class="row justify-content-center">
+    <header class="col-4 text-center m-3">
+        <h1 class="heading-font">Brands</h1>
+    </header>
 </div>
+{% if current_user.admin %}
+<div class="row justify-content-center">
+    <a href="{{ url_for('add_brand') }}" class="m-3 col-2 text-center btn btn-secondary">Add a new brand</a>
+</div>
+{% endif %}
+<div class="row mt-1 mb-5 justify-content-center">
+    {% for brand in brands %}
+    <div class="card shadow col-3 m-1 bg-dark width-18rem">
+        <div class="card-body">
+            <a href="/brand_gear_list/{{ brand.id }}" class="text-white text-decoration-none">{{
+                brand.brand_name.replace("-", " ").upper() }}</a>
+            {% if current_user.admin %}
+            <a href="{{ url_for('edit_brand', id=brand.id) }}" class="btn btn-success col-12 m-1">Edit Brand</a>
+            <a href="{{ url_for('delete_brand', id=brand.id) }}" class="btn btn-danger col-12 m-1">Delete Brand</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
 
 {% endblock %}
