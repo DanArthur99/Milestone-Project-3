@@ -204,6 +204,7 @@ def update_user(id):
                     flash(f"{user.username}'s details have been updated")
             except (
                 IntegrityError, UniqueViolation, PendingRollbackError) as e:
+                db.session.rollback()
                 if current_user.id == user.id:
                     flash("There was an error updating your details")
                 else:

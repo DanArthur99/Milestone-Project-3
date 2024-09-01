@@ -101,19 +101,10 @@ This was also tested on the following browsers:
 
 ### First Time Visit Goals
 
-1. To be able to set a user name for the game
 
-2. To have a score incrementer that keeps track of how many rounds of the game have been won by each player
-
-3. To be able to see the rules at any point in the game (to help first time player get to grips with the game)
 
 ### Returning Visitor Goals
 
-1. To make sure the game has a good and easily usable UI that makes it as easy as possible for the player to use/play
 
-2. To have the styling and layout visually pleasing so that players don't get visually bored.
-
-  
-3. To have the Game functionality fully working will all rules in place, and any errors as minimal as possible
 
 
