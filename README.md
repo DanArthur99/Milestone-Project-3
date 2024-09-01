@@ -21,7 +21,6 @@ Deployed Website: [Music Gear Review Site](https://gear-review-0801b9de8ec9.hero
     * [Typography](#Typography)
     * [Colour Scheme](#colour-palette)
     * [Features](#Features)
-    * [Accessibility](#Accessibility)
 
 * [Technologies Used](#Technologies-Used)
   * [Languages Used](#Languages-Used)
