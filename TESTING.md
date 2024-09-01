@@ -217,7 +217,7 @@ This checker and variations of it has been used throughout the routes.py file to
 
 2. To be able read reviews for different items within the database
 
-!![Read Reviews](docs/readme-images/read-reviews.png)
+![Read Reviews](docs/readme-images/read-reviews.png)
 
 3. To be able to add new products to the database, if a user cannot see their desired product
 
