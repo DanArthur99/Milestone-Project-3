@@ -18,36 +18,36 @@
             <h2 class="col-12 text-center">Details</h2>
         </div>
         <div class="row justify-content-center">
-            <p class="col-6 text-end"><strong>Username:</strong></p>
-            <p class="col-6">{{ user.username }}</p>
+            <p class="col-sm-6 text-end"><strong>Username:</strong></p>
+            <p class="col-sm-6">{{ user.username }}</p>
         </div>
         <div class="row justify-content-center">
-            <p class="col-6 text-end"><strong>Email:</strong></p>
-            <p class="col-6">{{ user.email }}</p>
+            <p class="col-sm-6 text-end"><strong>Email:</strong></p>
+            <p class="col-sm-6">{{ user.email }}</p>
         </div>
         <div class="row justify-content-center">
-            <p class="col-6 text-end"><strong>Password:</strong></p>
-            <p class="col-6">****************</p>
+            <p class="col-sm-6 text-end"><strong>Password:</strong></p>
+            <p class="col-sm-6">****************</p>
         </div>
         {% if current_user.admin %}
         {% if user.admin %}
         <div class="row justify-content-center">
-            <p class="col-6 text-end"><strong>Admin:</strong></p>
-            <p class="col-6">Yes</p>
+            <p class="col-sm-6 text-end"><strong>Admin:</strong></p>
+            <p class="col-sm-6">Yes</p>
         </div>
         {% else %}
         <div class="row justify-content-center">
-            <p class="col-6 text-end"><strong>Admin:</strong></p>
-            <p class="col-6">No</p>
+            <p class="col-sm-6 text-end"><strong>Admin:</strong></p>
+            <p class="col-sm-6">No</p>
         </div>
         {% endif %}
         {% endif %}
         <div class="row justify-content-center">
-            <p class="col-6 text-end"><strong>Reviews:</strong></p>
+            <p class="col-sm-6 text-end"><strong>Reviews:</strong></p>
             {% if current_user.id == user.id %}
-            <p class="col-6">To see your reviews, <a href="{{ url_for('user_reviews', id=user.id)}}"><span class="search-text">click here:</span></a></p>
+            <p class="col-sm-6">To see your reviews, <a href="{{ url_for('user_reviews', id=user.id)}}"><span class="search-text">click here:</span></a></p>
             {% else %}
-            <p class="col-6">To see {{ user.username }}'s reviews, <a
+            <p class="col-sm-6">To see {{ user.username }}'s reviews, <a
                     href="{{ url_for('user_reviews', id=user.id)}}"><span class="search-text">click
                         here:</span></a></p>
             {% endif %}
