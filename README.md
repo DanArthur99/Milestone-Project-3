@@ -5,7 +5,7 @@
 Deployed Website: [Music Gear Review Site](https://gear-review-0801b9de8ec9.herokuapp.com/)
 
 
-![Languages: 3](https://img.shields.io/badge/LANGUAGES-3-yellow)
+![Languages: 4]([https://img.shields.io/badge/LANGUAGES-4-yellow])
 ![W3C HTML: Validated](https://img.shields.io/badge/W3C_HTML-VALIDATED-orange)
 ![W3C CSS: Validated](https://img.shields.io/badge/W3C_CSS-VALIDATED-blue)
 ![Contrubutors: 1](https://img.shields.io/badge/CONTRIBUTORS-1-green)
