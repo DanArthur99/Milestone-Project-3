@@ -45,11 +45,11 @@
         <div class="row justify-content-center">
             <p class="col-6 text-end"><strong>Reviews:</strong></p>
             {% if current_user.id == user.id %}
-            <p class="col-6">To see your reviews, <a href="{{ url_for('user_reviews', id=user.id)}}">click here:</a></p>
+            <p class="col-6">To see your reviews, <a href="{{ url_for('user_reviews', id=user.id)}}"><span class="search-text">click here:</span></a></p>
             {% else %}
             <p class="col-6">To see {{ user.username }}'s reviews, <a
-                    href="{{ url_for('user_reviews', id=user.id)}}">click
-                    here:</a></p>
+                    href="{{ url_for('user_reviews', id=user.id)}}"><span class="search-text">click
+                        here:</span></a></p>
             {% endif %}
         </div>
     </section>
