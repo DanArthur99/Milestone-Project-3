@@ -138,6 +138,8 @@ This was also tested on the following browsers:
 
 4. To be able to delete their personal accounts if they wish
 
+![Close Account Modal](docs/readme-images/delete-account-modal.png)
+![User Deleted](docs/readme-images/user-deleted.png)
 
 
 
