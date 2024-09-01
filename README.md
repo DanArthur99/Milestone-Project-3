@@ -258,17 +258,17 @@ Some potential features that I would like to include include:
 * More interactivity, such as having a phyical star rating that they can select, rather than a drop down 0-5 menu
 * I would have liked to add some time stamps on the user reviews, so that people can see the times they were created/edited
 
-### Database Schema
+## Database Schema
 
-#### Entity Relationship Diagram
+### Entity Relationship Diagram
 
 ![Entity Relationship Diagram](docs/readme-images/entity-relationship-diagram.png)
 
-#### Tables and Relationships
+### Tables and Relationships
 
 Below are the tables and relationaships between the 5 tables in the database, as also reflected in the ERD above.
 
-##### User
+#### User
 
 * id - Primary Key
 * email 
@@ -277,7 +277,7 @@ Below are the tables and relationaships between the 5 tables in the database, as
 * reviews - one-to-many relationship with review table
 * admin 
 
-##### Gear
+#### Gear
 
 * id - Primary Key
 * name
@@ -285,19 +285,19 @@ Below are the tables and relationaships between the 5 tables in the database, as
 * category_id - Foriegn Key - many-to-one relationship with category table
 * reviews - one-to-many relationship with review table
 
-##### Brand
+#### Brand
 
 * id - Primary Key
 * brand_name 
 * gear - one-to-many relationship with gear table
 
-##### Category
+#### Category
 
 * id - Primary Key
 * category_name 
 * gear - one-to-many relationship with gear table
 
-##### Review
+#### Review
 
 * id - Primary Key
 * review_contents
