@@ -64,10 +64,10 @@
                 Password</a>
         </div>
         <div class="row justify-content-center mb-3">
-            {% if current_user.admin and current_user.id != user.id %}
+            {% if current_user.admin and current_user.id != user.id and not user.admin %}
             <button type="button" class="text-center btn btn-danger button-width" data-bs-toggle="modal"
                 data-bs-target="#user-deletion-check">Delete User</button>
-            {% elif not current_user.admin and current_user.id == user.id %}
+            {% elif not current_user.admin and current_user.id == user.id and not user.admin %}
             <button type="button" class="text-center btn btn-danger button-width" data-bs-toggle="modal"
                 data-bs-target="#user-deletion-check">Close Account</button>
             {% endif %}
