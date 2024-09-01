@@ -3,10 +3,13 @@
 ## CONTENTS
 * [Manual Testing](#Manual-Testing)
   * [Full Testing](#Full-Testing)
+    * [Login and Sign Up](#login-and-sign-up-testing)
+    * [CRUD Functionality](#crud-functionality)
+    * [User Validation](#user-validation)
+    * [Admin Features](#admin-features)
+* [PythonLinter](#python-linter)
 * [W3C Validator](#W3C-Validator)
-* [Lighthouse Testing](#Lighthouse-Testing)
 * [Wave Accessibiliy Testing](#Wave-Accessibility-TSesting)
-* [Python Checker](#Python-Checker)
 * [Bugs](#Bugs)
   * [Solved Bugs](#Solved-Bugs)
 * [Testing User Stories](#Testing-User-Stories)
@@ -131,35 +134,35 @@ I have used JavaScript to edit on the id names when the DOM Content is loaded.
 
 ![id Name Change](docs/readme-images/js-id-name-change.png)
 
-# Home Page
+### Home Page
 
 ![Home]
 
-# Login Page
+### Login Page
 
 ![W3C Home Page](docs/readme-images/home-page-html-validation.png)
 
-# Sign Up Page
+### Sign Up Page
 
 ![W3C Sign Up](docs/readme-images/w3c-html-sign-up.png)
 
-# Brands Page
+### Brands Page
 
 ![W3C Brands](docs/readme-images/w3c-brands-page.png)
 
-# Categories Page
+### Categories Page
 
 ![W3C Categories](docs/readme-images/w3c-html-categories.png)
 
-# Search Page
+### Search Page
 
 ![W3C Search](docs/readme-images/w3c-search.png)
 
-# Add Product Page
+### Add Product Page
 
 ![W3C Add Product](docs/readme-images/w3c-html-add-product.png)
 
-# Dashboard
+### Dashboard
 
 ![W3C Dashboard](docs/readme-images/w3c-html-dashboard.png)
 
@@ -191,11 +194,21 @@ I have used JavaScript to edit on the id names when the DOM Content is loaded.
 
 ### Search Page
 
-### Add Product
+![Wave Search](docs/readme-images/wave-search.png)
 
-### Dashboard
+## Bugs
+
+### Solved Bugs
+
+* The main issues I had were to do with user validation. I had problems where users were able to access pages that they should not have authorization to. The fix was fairly simple, and used an if statement to check if the current_user was admin, or if the current_user.id matched that of the review.user_id, or the dashboard user_id, etc.
+
+![Validity Checker](docs/readme-images/validity-chcker-if-statement.png)
+
+This checker and variations of it has been used throughout the routes.py file to check if the user has the correct authorisation.
 
 ## Testing User Stories
+
+### Overall Client Goals
 
 1. To be able to search for items within the database
 
@@ -209,7 +222,7 @@ I have used JavaScript to edit on the id names when the DOM Content is loaded.
 
 ![Add Product](docs/readme-images/add-product.png)
 
-#### First Time Visit Goals
+### First Time Visit Goals
 
 1. To be able to sign up to the site with a unique username and password
 
@@ -221,7 +234,7 @@ I have used JavaScript to edit on the id names when the DOM Content is loaded.
 ![Add Review](docs/readme-images/add-review.png)
 ![Your Reviews](docs/readme-images/your-reviews.png)
 
-#### Returning Visitor Goals
+### Returning Visitor Goals
 
 1. To be able to have a unique account that they can login into (created from signing up)
 
