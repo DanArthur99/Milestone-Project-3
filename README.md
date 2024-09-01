@@ -68,8 +68,6 @@ This site makes for a very convenient and quick way for users to review and see 
 
 1. To be able to sign up to the site with a unique username and password
 2. To be able to leave/delete their own reviews for a specific product
-3. To be able to see other peoples reviews of a specific product
-4. To be able to search for a product using the site's search functionalities
 
 #### Returning Visitor Goals
 
@@ -255,6 +253,7 @@ Some potential features that I would like to include include:
 
 * Admin users being able to change whether other users are admin or not
 * More interactivity, such as having a phyical star rating that they can select, rather than a drop down 0-5 menu
+* I would have liked to add some time stamps on the user reviews, so that people can see the times they were created/edited
 
 ### Database Schema
 
