@@ -4,8 +4,6 @@
 
 Deployed Website: [Music Gear Review Site](https://gear-review-0801b9de8ec9.herokuapp.com/)
 
-
-![Languages: 3](https://img.shields.io/badge/LANGUAGES-3-yellow)
 ![W3C HTML: Validated](https://img.shields.io/badge/W3C_HTML-VALIDATED-orange)
 ![W3C CSS: Validated](https://img.shields.io/badge/W3C_CSS-VALIDATED-blue)
 ![Contrubutors: 1](https://img.shields.io/badge/CONTRIBUTORS-1-green)
@@ -21,9 +19,8 @@ Deployed Website: [Music Gear Review Site](https://gear-review-0801b9de8ec9.hero
   * [Design](#Design)
     * [Wireframes](#Wireframes)
     * [Typography](#Typography)
-    * [Colour Scheme](#Colour-Scheme)
+    * [Colour Scheme](#colour-palette)
     * [Features](#Features)
-    * [Accessibility](#Accessibility)
 
 * [Technologies Used](#Technologies-Used)
   * [Languages Used](#Languages-Used)
@@ -150,6 +147,7 @@ The programming languages used for this project were:
 
 * Git - Version Control
 * Github - To save and store changes to the project
+* Heroku - Used for project deployment
 * [PostgresSQL](https://www.postgresql.org/) - Used for manage databases for local development
 * [Bootstrap (v5.3.2)](https://getbootstrap.com/) - CSS and JS framework used. Used mainly for the navbar, grid structure, and button styling.
 * [Flask](https://flask.palletsprojects.com/en/3.0.x/) - Python Framework
@@ -258,17 +256,17 @@ Some potential features that I would like to include include:
 * More interactivity, such as having a phyical star rating that they can select, rather than a drop down 0-5 menu
 * I would have liked to add some time stamps on the user reviews, so that people can see the times they were created/edited
 
-### Database Schema
+## Database Schema
 
-#### Entity Relationship Diagram
+### Entity Relationship Diagram
 
 ![Entity Relationship Diagram](docs/readme-images/entity-relationship-diagram.png)
 
-#### Tables and Relationships
+### Tables and Relationships
 
 Below are the tables and relationaships between the 5 tables in the database, as also reflected in the ERD above.
 
-##### User
+#### User
 
 * id - Primary Key
 * email 
@@ -277,7 +275,7 @@ Below are the tables and relationaships between the 5 tables in the database, as
 * reviews - one-to-many relationship with review table
 * admin 
 
-##### Gear
+#### Gear
 
 * id - Primary Key
 * name
@@ -285,19 +283,19 @@ Below are the tables and relationaships between the 5 tables in the database, as
 * category_id - Foriegn Key - many-to-one relationship with category table
 * reviews - one-to-many relationship with review table
 
-##### Brand
+#### Brand
 
 * id - Primary Key
 * brand_name 
 * gear - one-to-many relationship with gear table
 
-##### Category
+#### Category
 
 * id - Primary Key
 * category_name 
 * gear - one-to-many relationship with gear table
 
-##### Review
+#### Review
 
 * id - Primary Key
 * review_contents
