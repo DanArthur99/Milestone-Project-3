@@ -150,6 +150,7 @@ The programming languages used for this project were:
 
 * Git - Version Control
 * Github - To save and store changes to the project
+* Heroku - Used for project deployment
 * [PostgresSQL](https://www.postgresql.org/) - Used for manage databases for local development
 * [Bootstrap (v5.3.2)](https://getbootstrap.com/) - CSS and JS framework used. Used mainly for the navbar, grid structure, and button styling.
 * [Flask](https://flask.palletsprojects.com/en/3.0.x/) - Python Framework
