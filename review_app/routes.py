@@ -519,7 +519,7 @@ def delete_category(id):
 def delete_user(id):
     """Checks if the current user is admin, and if true, the selected."""
     user = User.query.get_or_404(id)
-    if not current_user.admin and current_user != user.id:
+    if not current_user.admin and current_user.id != user.id:
         flash("You are not authorized for this functionality")
         return redirect(url_for("home"))
     else:

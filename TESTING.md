@@ -96,14 +96,47 @@ This was also tested on the following browsers:
 
 ## Testing User Stories
 
-### Client Goals
+1. To be able to search for items within the database
 
+![Search](docs/readme-images/search-results.png)
 
-### First Time Visit Goals
+2. To be able read reviews for different items within the database
 
+!![Read Reviews](docs/readme-images/read-reviews.png)
 
+3. To be able to add new products to the database, if a user cannot see their desired product
 
-### Returning Visitor Goals
+![Add Product](docs/readme-images/add-product.png)
+
+#### First Time Visit Goals
+
+1. To be able to sign up to the site with a unique username and password
+
+![Sign Up](docs/readme-images/sign-up.png)
+![Dashboard](docs/readme-images/dashboard.png)
+
+2. To be able to leave/delete their own reviews for a specific product
+
+![Add Review](docs/readme-images/add-review.png)
+![Your Reviews](docs/readme-images/your-reviews.png)
+
+#### Returning Visitor Goals
+
+1. To be able to have a unique account that they can login into (created from signing up)
+
+![Login](docs/readme-images/login-page.png)
+![Dashboard](docs/readme-images/dashboard.png)
+
+2. To be able to edit their account information, i.e. username and password
+
+![Update Details](docs/readme-images/update-details.png)
+![Update Password](docs/readme-images/update-password.png)
+
+3. To be able to view their own reviews easily.
+
+![Your Reviews](docs/readme-images/your-reviews.png)
+
+4. To be able to delete their personal accounts if they wish
 
 
 
