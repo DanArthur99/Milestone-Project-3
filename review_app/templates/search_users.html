@@ -2,7 +2,7 @@
 {% block content %}
 
 <div class="row mt-5 justify-content-center">
-    <form method="POST" action="{{ url_for('list_of_users') }}" class="d-flex col-6" role="search">
+    <form method="POST" action="{{ url_for('list_of_users') }}" class="d-flex col-10 col-md-6" role="search">
         {{ form.hidden_tag() }}
         <input class="form-control me-2" type="search" id="search_bar" placeholder="Search users" aria-label="Search"
             name="searched" required>
