@@ -126,6 +126,11 @@ Admin delete reviews,The admin is able to delete any user's reviews ,"Click on a
 
 ## W3C Validator
 
+* On pages that use 2 different forms, there are 2 different csrf tokens which generate the same id name. 
+I have used JavaScript to edit on the id names when the DOM Content is loaded.
+
+![id Name Change](docs/readme-images/js-id-name-change.png)
+
 # Home Page
 
 ![Home]
@@ -164,7 +169,31 @@ Admin delete reviews,The admin is able to delete any user's reviews ,"Click on a
 
 ## Wave Accessibility Testing
 
+### Home Page
 
+![Wave Home Page](docs/readme-images/wave-home-page.png)
+
+### Sign Up Page
+
+![Wave Sign Up](docs/readme-images/wave-sign-up.png)
+
+### Login Page
+
+![Wave Login](docs/readme-images/wave-login-page.png)
+
+### Brands Page
+
+![Wave Brands Page](docs/readme-images/wave-brands.png)
+
+### Categories Page
+
+![Wave Categories Page](docs/readme-images/wave-categories.png)
+
+### Search Page
+
+### Add Product
+
+### Dashboard
 
 ## Testing User Stories
 
