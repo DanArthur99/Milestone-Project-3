@@ -202,8 +202,8 @@ def update_user(id):
                     flash("Your details have been updated")
                 else:
                     flash(f"{user.username}'s details have been updated")
-            except (
-                IntegrityError, UniqueViolation, PendingRollbackError) as e:
+            except:
+                db.session.rollback()
                 if current_user.id == user.id:
                     flash("There was an error updating your details")
                 else:
@@ -306,6 +306,7 @@ def edit_review(id):
                 flash("Your review has been updated")
             except (
                 IntegrityError, UniqueViolation, PendingRollbackError) as e:
+                db.session.rollback()
                 flash("There was an error editing this review")
             return redirect(url_for("about_gear", id=gear.id))
         form.review.data = review.review_contents
